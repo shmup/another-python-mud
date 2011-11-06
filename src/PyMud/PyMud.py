@@ -4,8 +4,8 @@ Created on 2011-08-14
 @author: Nich
 '''
 import asyncore
-import network.connection
-import network.mudserver
+import network.connection #@UnresolvedImport
+import network.mudserver  #@UnresolvedImport
 
 
 connection_data = {}

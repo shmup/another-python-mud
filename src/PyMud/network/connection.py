@@ -13,8 +13,8 @@ class ConnectionFactory(object):
         conn = Connection(handler)
         self.connection_store[self.get_id()] = conn
     
-    def deregister_connection(self, id):
-        del self.connection_store[id]
+    def deregister_connection(self, conn_id):
+        del self.connection_store[conn_id]
     
     def get_id(self):
         self.current_id += 1
