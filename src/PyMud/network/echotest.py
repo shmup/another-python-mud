@@ -6,7 +6,7 @@ Created on 2011-08-13
 
 import asyncore
 import socket
-import collections.namedtuple
+import collections
 
 
 class CommandBuilder(object):
