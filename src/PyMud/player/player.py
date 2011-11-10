@@ -7,10 +7,10 @@ Created on 2011-08-14
 class PlayerFactory(object):
     @staticmethod
     def buildPlayer(player_id):
-        player = Player(player_id)
+        player = TestPlayer(player_id)
         return player
     
-class Player(object):
+class TestPlayer(object):
     '''
     Provides convenience methods to access the world
     '''

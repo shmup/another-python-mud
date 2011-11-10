@@ -3,14 +3,31 @@ Created on 2011-08-13
 
 @author: Nich
 '''
-import multiprocessing
+from multiprocessing import Process, Queue
+import time
+import collections
 
+#Todo: Add option to supply queue to avoid timing issues in testing
 
-class CommandHander(multiprocessing.Process):
+class CommandHandler(Process):
     
     def __init__(self):
-        multiprocessing.Process.__init__(self)
+        Process.__init__(self)
+        self.commandQueue = Queue()
+        
+    def put(self, command):
+        self.commandQueue.put(command, True, None)
+    
+    def empty(self):
+        return self.commandQueue.empty()
+    
     
     def run(self):
-        pass
-                    
+        if self.commandQueue.empty():
+            pass
+        else:
+            command = self.commandQueue.get(True, None)
+            command.method(command.args)
+
+
+Command = collections.namedtuple("Command", ["method", "args"])              
