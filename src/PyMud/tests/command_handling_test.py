@@ -7,11 +7,11 @@ Created on Nov 9, 2011
 #Todo: get mock framework, so we can make sure that the commands actually execute
 
 import unittest
-import command.command_handler
+import command.command_handler #@UnresolvedImport
 import time
 
-def some_function(x):
-    return x+x
+def some_func(x):
+    print(x["args"])
 
 class CommandProcessingTest(unittest.TestCase):
 
@@ -26,7 +26,7 @@ class CommandProcessingTest(unittest.TestCase):
 
     def testCommandsEnterAndExit(self):
         self.assertTrue(self.handler.empty(), "Queue not empty at start")
-        c1 = command.command_handler.Command(some_function, [2])
+        c1 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args"})
         self.handler.put(c1)
         time.sleep(0.1)
         self.assertFalse(self.handler.empty() , "Queue empty after inserting one command")
@@ -35,8 +35,8 @@ class CommandProcessingTest(unittest.TestCase):
         
         
     def testAddRemoveTwo(self):
-        c1 = command.command_handler.Command(some_function, [2])
-        c2 = command.command_handler.Command(some_function, [2])
+        c1 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args1"})
+        c2 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args2"})
         self.assertTrue(self.handler.empty(), "Queue is not empty at start")
         self.handler.put(c1)
         self.handler.put(c2)
@@ -48,7 +48,7 @@ class CommandProcessingTest(unittest.TestCase):
         
     def testAddRemoveInterleave(self):
         self.assertTrue(self.handler.empty(), "Queue not empty at start")
-        c1 = command.command_handler.Command(some_function, [2])
+        c1 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args"})
         self.handler.put(c1)
         time.sleep(0.1)
         self.assertFalse(self.handler.empty() , "Queue empty after inserting one command first time")

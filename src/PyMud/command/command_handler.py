@@ -27,7 +27,7 @@ class CommandHandler(Process):
             pass
         else:
             command = self.commandQueue.get(True, None)
-            command.method(command.args)
+            command.command["function"](command.context)
 
 
-Command = collections.namedtuple("Command", ["method", "args"])              
+Command = collections.namedtuple("Command", ["command", "context"])              
