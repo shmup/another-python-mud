@@ -11,8 +11,12 @@ commands = {
                     "function": c.say,
                     
                     },
-            
+            "default": {
+                        "requires":["sender"],
+                        "function":c.default
+                        }
             
             }
+
 
 

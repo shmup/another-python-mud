@@ -6,6 +6,8 @@ Created on Nov 10, 2011
 import unittest
 import command.command_factory as test
 
+DEFAULT_FUNC = 123
+
 class Test(unittest.TestCase):
 
 
@@ -22,7 +24,11 @@ class Test(unittest.TestCase):
                          "say to me":{
                                    "function": "say to me",
                                    "requires":["args", "targets_in_area"]
-                                   }
+                                   },
+                         "default":{
+                                    "function": DEFAULT_FUNC,
+                                    "requires": "sender"
+                                    }
                          }
         self.command1 = test.command_factory("say to Jim I'm sleepy", self.commands)
         self.command2 = test.command_factory("say I'm sleepy", self.commands)
@@ -41,8 +47,10 @@ class Test(unittest.TestCase):
         self.assertEqual(self.command1[1]["args"], "Jim I'm sleepy")
         self.assertEqual(self.command2[1]["args"], "I'm sleepy")
         self.assertEqual(self.command3[1]["args"], "I'm sleepy")
-        
-        
+    
+    def testFunctionNotFoundReturnsDefault(self):
+        default = test.command_factory("asdfas", self.commands)    
+        self.assertEqual(default[0]["function"], DEFAULT_FUNC)
 
 
 if __name__ == "__main__":

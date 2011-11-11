@@ -9,4 +9,5 @@ def say(context):
     for person in context["local_area_targets"]:
         person.handle_command(command)
     
-    
+def default(context):
+    context["sender"].send("I don't understand that")

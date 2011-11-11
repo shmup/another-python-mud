@@ -20,3 +20,5 @@ def match_command(split_command_text, comm = comm_dict.commands):
         cmd = merge_text(split_command_text, i)
         if cmd in comm:
             return " ".join(split_command_text[0:i+1]), " ".join(split_command_text[i+1:])
+        
+    return ("default", "")

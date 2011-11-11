@@ -22,9 +22,8 @@ class TestPlayerFactory(object):
 class ConnectionTest(unittest.TestCase):
     def setUp(self):
         handler = TestConnectionHandler()
-        command_handler = TestCommandHandler()
         playerfact = TestPlayerFactory()
-        self.conn = test.Connection(0, handler, command_handler, playerfact)
+        self.conn = test.Connection(0, handler, playerfact)
     def tearDown(self):
         pass
     def testSend(self):
@@ -35,10 +34,9 @@ class ConnectionFactoryTest(unittest.TestCase):
 
     def setUp(self):
         self.conn_store = {}
-        comm_handler = TestCommandHandler()
         playerfact = TestPlayerFactory()
         self.connection_handler = TestConnectionHandler()
-        self.fact = test.ConnectionFactory(self.conn_store, comm_handler, playerfact)
+        self.fact = test.ConnectionFactory(self.conn_store, playerfact)
 
 
     def tearDown(self):

@@ -3,7 +3,7 @@ Created on Nov 9, 2011
 
 @author: Nich
 '''
-import command_handler as c
+
 import command_dict as com_list
 import command_utils as com_utils
  
