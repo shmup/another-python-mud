@@ -3,8 +3,7 @@ Created on 2011-08-13
 
 @author: Nich
 '''
-from multiprocessing import Process, Queue
-import time
+from multiprocessing import Process
 import collections
 import command_factory as fact
 
@@ -15,6 +14,7 @@ class CommandProcess(Process):
     def __init__(self, commandQueue):
         Process.__init__(self)
         self.commandQueue = commandQueue
+        self.active = False
         
     def put(self, command):
         self.commandQueue.put(command, True, None)
@@ -30,8 +30,11 @@ class CommandProcess(Process):
             command.command["function"](command.context)
 
     def run(self):
-        while True:
+        self.active = True
+        while self.active:
             self.process_command()
+
+        
             
                 
 

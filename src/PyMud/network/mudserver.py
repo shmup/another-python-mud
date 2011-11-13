@@ -36,7 +36,8 @@ class ConnectionHandler(asynchat.async_chat):
     
     def handle_read(self):
         data = self.recv(8192)
+        data = str(data, "utf-8")
         print(data)
         print("data passed to handler")
-        self.handler.put(str(data).strip())
+        self.handler.put(data.strip())
                 

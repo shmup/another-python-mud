@@ -14,7 +14,11 @@ commands = {
             "default": {
                         "requires":["sender"],
                         "function":c.default
-                        }
+                        },
+            "default": {
+                        "requires":[],
+                        "function":c.com_close
+                        },
             
             }
 
