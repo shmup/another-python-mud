@@ -8,7 +8,7 @@ Created on Nov 9, 2011
 
 import unittest
 import command.command_handler #@UnresolvedImport
-import time
+from command.command_factory import Command
 import queue #@UnresolvedImport
 
 def some_func(x):
@@ -20,7 +20,7 @@ class CommandProcessingTest(unittest.TestCase):
     def setUp(self):
         self.comm_queue = queue.Queue()
         self.handler = command.command_handler.CommandProcess(self.comm_queue)
-        #self.handler.start()
+        
 
     def tearDown(self):
         pass
@@ -28,7 +28,7 @@ class CommandProcessingTest(unittest.TestCase):
 
     def testCommandsEnterAndExit(self):
         self.assertTrue(self.handler.empty(), "Queue not empty at start")
-        c1 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args"})
+        c1 = Command({"function":some_func, "requires":["args"]}, {"args":"some args"})
         self.comm_queue.put(c1)
         self.assertFalse(self.handler.empty() , "Queue empty after inserting one command")
         self.handler.process_command()
@@ -36,8 +36,8 @@ class CommandProcessingTest(unittest.TestCase):
         
         
     def testAddRemoveTwo(self):
-        c1 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args1"})
-        c2 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args2"})
+        c1 = Command({"function":some_func, "requires":["args"]}, {"args":"some args1"})
+        c2 = Command({"function":some_func, "requires":["args"]}, {"args":"some args2"})
         self.assertTrue(self.handler.empty(), "Queue is not empty at start")
         self.comm_queue.put(c1)
         self.comm_queue.put(c2)
@@ -48,7 +48,7 @@ class CommandProcessingTest(unittest.TestCase):
         
     def testAddRemoveInterleave(self):
         self.assertTrue(self.handler.empty(), "Queue not empty at start")
-        c1 = command.command_handler.Command({"function":some_func, "requires":["args"]}, {"args":"some args"})
+        c1 = Command({"function":some_func, "requires":["args"]}, {"args":"some args"})
         self.comm_queue.put(c1)
         self.assertFalse(self.handler.empty() , "Queue empty after inserting one command first time")
         self.handler.process_command()

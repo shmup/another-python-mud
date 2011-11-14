@@ -15,7 +15,7 @@ commands = {
                         "requires":["sender"],
                         "function":c.default
                         },
-            "default": {
+            "close": {
                         "requires":[],
                         "function":c.com_close
                         },

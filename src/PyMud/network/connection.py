@@ -29,7 +29,6 @@ class ConnectionFactory(object):
         self.current_id += 1
         return self.current_id-1
 
-
 class Connection(object):
     '''
     classdocs

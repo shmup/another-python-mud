@@ -7,6 +7,7 @@ import unittest
 import command.command_factory as test
 
 DEFAULT_FUNC = 123
+CALLER = 1234
 
 class Test(unittest.TestCase):
 
@@ -30,9 +31,9 @@ class Test(unittest.TestCase):
                                     "requires": "sender"
                                     }
                          }
-        self.command1 = test.command_factory("say to Jim I'm sleepy", self.commands)
-        self.command2 = test.command_factory("say I'm sleepy", self.commands)
-        self.command3 = test.command_factory("say to me I'm sleepy", self.commands)
+        self.command1 = test.command_factory((CALLER, "say to Jim I'm sleepy"), self.commands)
+        self.command2 = test.command_factory((CALLER, "say I'm sleepy"), self.commands)
+        self.command3 = test.command_factory((CALLER, "say to me I'm sleepy"), self.commands)
 
     def tearDown(self):
         pass

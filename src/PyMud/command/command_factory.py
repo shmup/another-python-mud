@@ -6,32 +6,39 @@ Created on Nov 9, 2011
 
 import command_dict as com_list
 import command_utils as com_utils
-from command_handler import Command
-import logging, multiprocessing
+import logging, multiprocessing 
+import collections
 
-logger = multiprocessing.get_logger()
+
+
 class TestPlayer(object):
     def handle_command(self, command):
-        logger.warning(command)
+        pass
+        #logger.warning(command)
     def send(self, command):
-        logger.warning(str(command))
+        #logger.warning(str(command))
+        pass
  
 p1 = TestPlayer()
 p_col = [TestPlayer(), TestPlayer(), TestPlayer(), TestPlayer(),]
 
-def command_factory(command_text, command_list = com_list.commands):
-    split_text = com_utils.split_command(command_text)
+Command = collections.namedtuple("Command", ["command", "context"])
+
+def command_factory(caller_command, command_list = com_list.commands):
+    split_text = com_utils.split_command(caller_command[1])
     command_args = com_utils.match_command(split_text, command_list)
     command = command_list[command_args[0]]
     args = command_args[1]
-    context = build_context(command, args)
+    context = build_context(command, caller_command[0], args)
     return Command(command, context)
 
-def build_context(command, args):
+def build_context(command, caller, args):
     context = {}
     for req in command["requires"]:
         if req == "args":
             context[req] = args
+        elif req == "sender":
+            context[req] = caller
         else:
             context[req] = get_requested_thing(req)
     return context

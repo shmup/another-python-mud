@@ -4,7 +4,7 @@ Created on 2011-08-14
 @author: Nich
 '''
 #TODO: make player persistent, secure password
-
+#TODO: distinguish between password failed errors and username not found errors. Should the factory be enforcing that anyways?
 
 class PlayerFactory(object):
     def __init__(self, player_store):
@@ -16,10 +16,13 @@ class PlayerFactory(object):
                 return self.player_store[username]
             else:
                 return None
+    
+    def hasPlayer(self, username):
+        return username in self.player_store
         
-    def newBuildPlayer(self, username, password):
+    def newBuildPlayer(self, username, password, connection=None):
         if not username in self.player_store:
-            player = TestPlayer(username, password)
+            player = TestPlayer(username, password, connection)
             self.player_store[username] = player
             return player
         else:
@@ -29,8 +32,14 @@ class TestPlayer(object):
     '''
     Provides storage of username and password and command handing functionality. Associated but distinct from a Character
     '''
-    def __init__(self, username, password):
+    def __init__(self, username, password, connection = None):
         self.username = username
         self.password = password
-    def handle_command(self, command, connection):
-        pass
+        self.connection = connection
+        
+    def handle_command(self, command):
+        print("This was called")
+        self.connection.send(bytes(str(command)))
+        
+    def setConnection(self, conn):
+        self.connection = conn
