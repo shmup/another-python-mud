@@ -59,6 +59,11 @@ class ConnectionFactoryTest(unittest.TestCase):
         self.assertIsNone(self.fact.get_by_id(con1.c_id))
         self.assertEqual(con2, self.fact.get_by_id(con2.c_id))
 
+
+
+
+        
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

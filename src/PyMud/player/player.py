@@ -20,7 +20,7 @@ class PlayerFactory(object):
     def hasPlayer(self, username):
         return username in self.player_store
         
-    def newBuildPlayer(self, username, password, connection=None):
+    def buildNewPlayer(self, username, password, connection=None):
         if not username in self.player_store:
             player = TestPlayer(username, password, connection)
             self.player_store[username] = player
@@ -43,3 +43,6 @@ class TestPlayer(object):
         
     def setConnection(self, conn):
         self.connection = conn
+    
+    def logged_in(self):
+        return not self.connection is None

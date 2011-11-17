@@ -3,51 +3,35 @@ Created on Nov 13, 2011
 
 @author: Nich
 '''
-import asyncore, socket, asynchat
-from connection import ConnectionFactory
-from player.player import PlayerFactory
-from mudserver import ConnectionHandler
 
-class LoginHandlerConnection(asynchat.async_chat):
-    def __init__(self, sock, addr, conn_fact, player_fact, command_handler):
-        asynchat.async_chat.__init__(self, sock=sock)
-        self.addr = addr
-        self.sock = sock
-        self.set_terminator('/n')
-        self.conn_fact = conn_fact
-        self.player_fact = player_fact
-        self.command_handler = command_handler
-        self.login = LoginHandler(self, self.player_fact)
-        
-        
-    def handle_read(self):
-        data = self.recv(8192)
-        self.login.handle_data(data)
-    
-    
-    
+
 class LoginHandler(object):
-    
-    def __init__(self, connection, player_fact):
-        self.connection = connection
+    def __init__(self, next_handler, conn):
+        self.conn = conn
+        self.next = next_handler
         self.data = {}
-        self.player_factory = player_fact
         self.login_stack = [Login(self)]
         self.enter()
-    
     def enter(self):
         self.login_stack[-1].enter()
-    
     def handle_data(self, data):
-        data = str(data, "utf-8").strip()
-        self.login_stack[-1].handle_data(data)
+        if not ("player" in self.data and self.data["player"].logged_in()):
+            self.login_stack[-1].handle_data(data)
+        else:
+            self.next.handle_data(data)
+
+    def hasPlayer(self, username):
+        return self.conn.p_fact.hasPlayer(username)
+    
+    def buildNewPlayer(self, username, password):
+        return self.conn.p_fact.buildNewPlayer(username, password, self.conn)
     
 class MenuElement(object):
     def __init__(self, handler):
         self.data = handler.data
-        self.p_fact = handler.player_factory
-        self.conn = handler.connection
+        self.conn = handler.conn
         self.handler = handler
+        
     def enter(self):
         pass
     def handle_data(self, data):
@@ -62,7 +46,7 @@ class Login(MenuElement):
         
     def handle_data(self, data):
         self.data["username"] = data
-        if self.p_fact.hasPlayer(data): 
+        if self.handler.hasPlayer(data): 
             self.handler.login_stack.append(Password(self.handler))
         else:
             self.handler.login_stack.append(Confirm(self.handler, GetPassword(self.handler)))
@@ -94,6 +78,7 @@ class Confirm(MenuElement):
         self.conn.send(b"Account not found, do you want to create a new one with that name? (y/n)")
         
     def handle_data(self, data):
+        print(data)
         if data == "y": 
             self.handler.login_stack.append(self.next)
         elif data == "n":
@@ -125,7 +110,7 @@ class ConfirmPassword(MenuElement):
         self.data["cpassword"] = data
         
         if self.data["password"] == self.data["cpassword"]:
-            self.data["player"] = self.p_fact.newBuildPlayer(self.data["username"], self.data["password"])
+            self.data["player"] = self.handler.buildNewPlayer(self.data["username"], self.data["password"])
         self.handler.login_stack.append(Connect(self.handler))
         self.handler.enter()
 
@@ -134,10 +119,8 @@ class Connect(MenuElement):
         MenuElement.__init__(self, handler)
     
     def enter(self):
-        conn = ConnectionHandler(self.handler.connection.sock, self.handler.connection.addr, self.handler.connection.command_handler)
-        self.handler.connection.conn_fact.register_connection(conn)
-        self.data["player"].setConnection(conn)
+        self.data["player"].setConnection(self.conn)
+        pass
             
-    
     def handle_data(self, data):
         pass        

@@ -5,7 +5,7 @@ Created on 2011-08-13
 '''
 from multiprocessing import Process
 import command_factory as fact
-import multiprocessing, logging
+import multiprocessing
 logger = multiprocessing.get_logger()
 
 #Todo: Add option to supply queue to avoid timing issues in testing

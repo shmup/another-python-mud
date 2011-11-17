@@ -25,12 +25,12 @@ class PlayerFactoryTest(unittest.TestCase):
         self.assertEqual(player1, self.fact.getPlayer("p1", "12345"))
     
     def testCantGetWithBadPassword(self):
-        _player1 = self.fact.newBuildPlayer("p1", "12345", TestConnection())
+        _player1 = self.fact.buildNewPlayer("p1", "12345", TestConnection())
         self.assertEqual(None, self.fact.getPlayer("p1", "1234"))
         
     def testCantOverwriteExitingPlayer(self):
-        player1 = self.fact.newBuildPlayer("p1", "12345", TestConnection())
-        usurper = self.fact.newBuildPlayer("p1", "123456", TestConnection())
+        player1 = self.fact.buildNewPlayer("p1", "12345", TestConnection())
+        usurper = self.fact.buildNewPlayer("p1", "123456", TestConnection())
         self.assertEqual(None, usurper)
         self.assertEqual(player1, self.fact.getPlayer("p1", "12345"))
         self.assertEqual(self.fact.getPlayer("p1", "12345").password, "12345")
