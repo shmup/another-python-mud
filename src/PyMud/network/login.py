@@ -23,6 +23,9 @@ class LoginHandler(object):
     def hasPlayer(self, username):
         return self.conn.p_fact.hasPlayer(username)
     
+    def getPlayer(self, username, password):
+        return self.conn.p_fact.getPlayer(username, password)
+    
     def buildNewPlayer(self, username, password):
         return self.conn.p_fact.buildNewPlayer(username, password, self.conn)
     
@@ -57,16 +60,16 @@ class Password(MenuElement):
         MenuElement.__init__(self, handler)
     
     def enter(self):    
-        self.conn.send(b"Please enter your password/n")
+        self.conn.send(b"Please enter your password")
         
     def handle_data(self, data):
         self.data["password"] = data
-        p = self.getPlayer(self.data["username"], self.data["password"])
+        p = self.handler.getPlayer(self.data["username"], self.data["password"])
         if not p:
             self.conn.send(b"Bad password")
         else:
-            #We should be fine to launch into the actual connection
-            pass 
+            self.data["player"] = p
+            self.handler.login_stack.append(Connect(self.handler))
         self.handler.enter()
         
 class Confirm(MenuElement):

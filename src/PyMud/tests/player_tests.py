@@ -21,7 +21,7 @@ class PlayerFactoryTest(unittest.TestCase):
 
 
     def testMakeNewPlayer(self):
-        player1 = self.fact.newBuildPlayer("p1", "12345", TestConnection())
+        player1 = self.fact.buildNewPlayer("p1", "12345", TestConnection())
         self.assertEqual(player1, self.fact.getPlayer("p1", "12345"))
     
     def testCantGetWithBadPassword(self):

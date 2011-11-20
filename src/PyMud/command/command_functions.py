@@ -4,11 +4,14 @@ Created on Nov 9, 2011
 @author: Nich
 '''
 import sys
-def say(context):
-    command = {"sender":context["sender"], "command":"say", "args":context["args"]}
-    context["sender"].handle_command(command)
-    for person in context["local_area_targets"]:
-        person.handle_command(command)
+def say(message):
+    sender = message["sender"]
+    args = message["message"]["args"]
+    command = {"sender":sender, "message":{"command":"say", "args":args}}
+    sender.send(command)
+    local_area_targets = message["message"]["local_area_targets"]
+    for person in local_area_targets:
+        person.send(command)
     
 def default(context):
     print("blah blah blah")

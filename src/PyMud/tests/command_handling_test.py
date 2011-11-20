@@ -15,8 +15,6 @@ def some_func(x):
     print(x["args"])
 
 class CommandProcessingTest(unittest.TestCase):
-
-
     def setUp(self):
         self.comm_queue = queue.Queue()
         self.handler = command.command_handler.CommandProcess(self.comm_queue)

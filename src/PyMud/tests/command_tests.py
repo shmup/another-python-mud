@@ -11,16 +11,16 @@ class TestPlayer(object):
         self.name = name
         self.message = ''
         
-    def handle_command(self, arg):
-        self.message = arg
+    def send(self, message):
+        self.message = message
 
 class TestObject(object):
     def __init__(self, name):
         self.name = name
         self.message = ''
         
-    def handle_command(self, arg):
-        self.message = arg
+    def send(self, message):
+        self.message = message
 
 class Test(unittest.TestCase):
 
@@ -38,12 +38,12 @@ class Test(unittest.TestCase):
 
 
     def testSay(self):
-        context = {"sender":self.p1, "local_area_targets":self.targets, "args":"hello"}
+        context = {"sender":self.p1, "message":{"local_area_targets":self.targets, "args":"hello"}}
         com.say(context)
-        self.assertEqual(self.p1.message, {"sender":self.p1, "command":"say", "args":"hello"})
-        self.assertEqual(self.p2.message, {"sender":self.p1, "command":"say", "args":"hello"})
-        self.assertEqual(self.p3.message, {"sender":self.p1, "command":"say", "args":"hello"})
-        self.assertEqual(self.o1.message, {"sender":self.p1, "command":"say", "args":"hello"})
+        self.assertEqual(self.p1.message, {"sender":self.p1, "message":{"command":"say", "args":"hello"}})
+        self.assertEqual(self.p2.message, {"sender":self.p1, "message":{"command":"say", "args":"hello"}})
+        self.assertEqual(self.p3.message, {"sender":self.p1, "message":{"command":"say", "args":"hello"}})
+        self.assertEqual(self.o1.message, {"sender":self.p1, "message":{"command":"say", "args":"hello"}})
         
 
 
