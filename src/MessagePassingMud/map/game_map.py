@@ -147,6 +147,7 @@ gmap = GameMap()
 
 
 def show_map(p = None, size = (20, 20), args = None):
+    
     pos = None
     if not p is None:
         pos = p.location
@@ -160,6 +161,8 @@ def show_map(p = None, size = (20, 20), args = None):
     gen_vert_y = display_vertical_y(cache_map, pos, size)
     for line in compose(gen_hoz, gen_vert_x, gen_vert_y):
         yield line
+    
+    
             
 
 if __name__ == "__main__":

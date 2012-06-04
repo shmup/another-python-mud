@@ -6,7 +6,7 @@ Created on Nov 30, 2011
 import asyncore
 import socket
 import asynchat
-import network.login as login
+import MessagePassingMud.network.login as login
 
 class ConnectionServer(asyncore.dispatcher):
     '''
