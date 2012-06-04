@@ -10,6 +10,29 @@ def say(p = None, args = None):
     else:    
         return ("You open your mouth, but don't say anything",)
 
+def dig(p = None, args = None):
+    if len(args) is 2:
+        dist = int(args[0])
+        direction = args[1]
+        act_dist = p.dig(dist, direction)
+        return ("You dig "+str(act_dist)+" steps to the "+direction,)
+    else:
+        return ("Syntax is dig dist dir", \
+                "where dist is a number indicating the number of steps to take", \
+                "and dir is the direction to take them (n/s/e/w).")
+
+def move(p = None, args = None):
+    if len(args) is 2:
+        dist = int(args[0])
+        direction = args[1]
+        act_dist = p.move(dist, direction)
+        return ("You move "+str(act_dist)+" steps to the "+direction,)
+    else:
+        return ("Syntax is move dist dir", \
+                "where dist is a number indicating the number of steps to take", \
+                "and dir is the direction to take them (n/s/e/w).")
+    
+
 def goto(p = None, args = None):
     if not args is None:
         x, y, z = args

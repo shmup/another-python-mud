@@ -7,23 +7,30 @@ from MessagePassingMud.command.commands import *
 from MessagePassingMud.map.game_map import show_map
 
 
+commands = {"say":{"function":say, "num_args":"unlimited"},
+            "move":{"function":move, "num_args":2},
+            "dig":{"function":dig, "num_args":2},
+            "goto":{"function":goto, "num_args":3},
+            "n":{"function":n, "num_args":0},
+            "s":{"function":s, "num_args":0},
+            "e":{"function":e, "num_args":0},
+            "w":{"function":w, "num_args":0},
+            "l":{"function":show_map, "num_args":0}
+            }
 
 
-
-def match_command(msg):
+def match_command(msg, comms = commands):
+    split_msg = msg.split(" ")
+    comm_name = split_msg[0]
+    if comm_name in comms:
+        command = comms[comm_name]
+        num_args = command["num_args"]
+        # If the number of args is unlimited, or the correct number
+        if num_args == "unlimited" or num_args == len(split_msg[1:]):
+            return command["function"], split_msg[1:]
     
-    #We can and have done better then this. No excuses, fix this
-    if msg[0:3] == "say":
-        return say, msg[3:].split(" ")
-    if msg[0:4] == "goto":
-        return goto, msg[5:].split(" ")
-    if msg[0:1] == "n":
-        return n, None
-    if msg[0:1] == "s":
-        return s, None
-    if msg[0:1] == "e":
-        return e, None
-    if msg[0:1] == "w":
-        return w, None
-    
-    return show_map, (None)
+    return default_message, None
+
+
+def default_message(p = None, args = None):
+    return ("Sorry, I don't understand that",)

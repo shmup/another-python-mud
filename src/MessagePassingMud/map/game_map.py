@@ -35,6 +35,9 @@ class GameMap(object):
         self.gen = generate_value
         self.map_cache = {}
     
+    def dig(self, loc):
+        self.map_cache[loc] = 0
+    
     
     def get(self, loc):
         if loc in self.map_cache:

@@ -4,6 +4,8 @@ Created on May 22, 2012
 @author: Nich
 '''
 from MessagePassingMud.map.game_map import gmap
+from MessagePassingMud.map.directions import dirs, add_dirs
+
 
 
 class Player():
@@ -24,6 +26,26 @@ class Player():
             return True
         return False
         
+    def move(self, dist, direction):
+        if direction in dirs:
+            num_dir = dirs[direction]
+            for i in range(dist):
+                new_loc = add_dirs(self.location, num_dir)
+                if not self.set_location(new_loc):
+                    return i
+            return dist
+        return 0
+             
+    def dig(self, dist, direction):
+        if direction in dirs:
+            num_dir = dirs[direction]
+            for i in range(dist):
+                new_loc = add_dirs(self.location, num_dir)
+                gmap.dig(new_loc)
+                if not self.set_location(new_loc):
+                    return i
+            return dist
+        return 0
     
     def set_local_map(self, l_map):
         self.local_map = l_map
