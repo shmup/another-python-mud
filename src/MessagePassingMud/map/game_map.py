@@ -4,7 +4,7 @@ Created on Jun 3, 2012
 @author: Nich
 '''
 from cave_gen import generate_value
-from MessagePassingMud.utils.compose import compose
+
 
 
 def neighbour_count(gen, loc):
@@ -78,27 +78,24 @@ class GameMap(object):
                         self.generate_blind_recur(n, gen_map, bounds, visited)
         
 
+colors = {
+          "blue": chr(27)+"[34m",
+          "cyan": chr(27)+"[36m",
+          "white": chr(27)+"[37m",
+          "red": chr(27)+"[31m",
+          "green": chr(27)+"[32m",
+          }        
+
+current_color = "white"
+def set_color(color):
+    global current_color
+    if color == current_color or not color in colors:
+        return ""
+    else:
+        current_color = color
+        return colors[color]         
         
-def display_horizontal(g_map, pos, ran):
-    z = pos[2]
-    xmin = pos[0] - int(ran[0]/2)
-    xmax = pos[0] + int(ran[0]/2)
-    ymin = pos[1] - int(ran[1]/2)
-    ymax = pos[1] + int(ran[1]/2)
-    yield "0"*(ran[0]+2)
-    for j in range(ymax, ymin, -1):
-        line = "0"
-        for i in range(xmin, xmax):
-            if (i, j, z) == pos:
-                line += '@'
-            elif (i, j, z) not in g_map:
-                line += '?'
-            elif g_map[(i, j, z)] == 1:
-                line += "#"
-            elif g_map[(i, j, z)] == 0:
-                line += " "
-        yield line+"0"
-    yield "0"*(ran[0]+2)
+
 
 def display_vertical_x(g_map, pos, ran):
     y = pos[1]
@@ -112,58 +109,35 @@ def display_vertical_x(g_map, pos, ran):
         for x in range(xmin, xmax):
             
             if (x, y, z) == pos:
-                line += '@'
+                line += set_color("red")+'@'
             elif (x, y, z) not in g_map:
-                line += '?'
+                line += set_color("white")+'?'
             elif g_map[(x, y, z)] == 1:
-                line += "#"
+                line += set_color("blue")+"#"
             elif g_map[(x, y, z)] == 0:
-                line += " "
-        yield line+"0"
+                line += " " if g_map[(x, y-1, z)] == 0 else set_color("cyan")+"#"
+        yield line+set_color("white")+"0"
     yield "0"*(ran[0]+2)
 
-def display_vertical_y(g_map, pos, ran):
-    x = pos[0]
-    zmin = pos[2] - int(ran[1]/2)
-    zmax = pos[2] + int(ran[1]/2)
-    ymin = pos[1] - int(ran[0]/2)
-    ymax = pos[1] + int(ran[0]/2)
-    yield "0"*(ran[0]+2)
-    for z in range(zmax, zmin, -1):
-        line = "0"
-        for y in range(ymin, ymax):
-            if (x, y, z) == pos:
-                line += '@'
-            elif (x, y, z) not in g_map:
-                line += '?'
-            elif g_map[(x, y, z)] == 1:
-                line += "#"
-            elif g_map[(x, y, z)] == 0:
-                line += " "
-        yield line+"0"
-    yield "0"*(ran[0]+2)
+
 
 gmap = GameMap()
 
 
 def show_map(p = None, size = (20, 20), args = None):
-    
     pos = None
     if not p is None:
         pos = p.location
     else:
         pos = (3, 3, 3)
     
-    
     cache_map = gmap.generate_blind(pos, (12, 12, 12))
-    gen_hoz = display_horizontal(cache_map, pos, size)
     gen_vert_x = display_vertical_x(cache_map, pos, size)
-    gen_vert_y = display_vertical_y(cache_map, pos, size)
-    for line in compose(gen_hoz, gen_vert_x, gen_vert_y):
+    
+    for line in gen_vert_x:
         yield line
     
     
-            
 
 if __name__ == "__main__":
     for i in show_map():
