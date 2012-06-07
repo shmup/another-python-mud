@@ -4,6 +4,64 @@
 <link rel=StyleSheet href="style/style.css" type="text/css" media=screen>
 <script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script> 
 <script language = "javascript">
+//idea 1: Server sends a "windowed" view of the map. This windowed view is 0 based, regardless of the actual coordinate the user is at
+//Sub-idea 1: The server only sends the differences from the last request, not the full map
+
+var map_diff_1 = {
+					"gamemap":{
+								"0_1":0,
+								"0_3":0,
+								"0_5":0,
+								"0_7":0,
+								"0_9":0,
+								"1_2":1,
+								"1_4":1,
+								"1_6":1,
+								"1_8":1,
+								"1_10":1
+							  }
+					
+				}
+				
+var map_diff_2 = {
+					"gamemap":{
+								"0_1":1,
+								"0_3":1,
+								"0_5":1,
+								"0_7":1,
+								"0_9":1,
+								"2_2":1,
+								"2_4":1,
+								"2_6":1,
+								"2_8":1,
+								"2_10":1
+							  }
+					
+				}
+
+mapnum = 0
+
+function change_map(){
+	
+	if(mapnum == 1)
+	{
+		mapnum = 2;
+	}
+	else
+	{
+		mapnum = 1
+	}
+	map = eval("map_diff_"+mapnum)
+	
+	for(var tile in map.gamemap)
+	{
+		
+		$("#"+tile).removeClass( "tile0 tile1 tile2 tile3", false )
+		$("#"+tile).addClass( "tile"+map.gamemap[tile], true )
+	}
+	
+}
+
 
 $(document).ready(function() {
 for(var j = 0; j < 19; j++)
@@ -11,12 +69,11 @@ for(var j = 0; j < 19; j++)
 	$("<div/>", { "class":"tile-row", "id": "row"+j }).appendTo(".map-box");
 	for(var i = 0; i < 33; i++)
 	{
-		var color = "black";
-		
-		$("<div>", {"class":color+"-tile", "id":"_"+i+"_"+j}).html("#").appendTo("#row"+j);
+		$("<div>", {"class":"tile tile0", "id":j+"_"+i}).html("#").appendTo("#row"+j);
 	}
 }
    
+window.setInterval(change_map,5000)
 
 });
 

@@ -8,16 +8,19 @@ div.tile-row {
 	display:table-row;
 }
 
-div.red-tile {
+div.tile{
 	width:10px;
 	height:10px;
 	display:table-cell;
-	background-color:red;
 }
-div.black-tile {
-	display:table-cell;
+
+div.tile1 {
 	background-color:black;
 	color:white;
-	overflow: hidden;
-	line-height: 0.9em;
+}
+div.tile0 {
+	
+	background-color:black;
+	color:black;
+	
 }
