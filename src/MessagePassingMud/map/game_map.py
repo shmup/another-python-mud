@@ -3,7 +3,7 @@ Created on Jun 3, 2012
 
 @author: Nich
 '''
-from cave_gen import generate_value
+from MessagePassingMud.map.map_generators import generate_tile
 
 
 
@@ -32,11 +32,13 @@ class GameMap(object):
     
     '''
     def __init__(self):
-        self.gen = generate_value
+        self.gen = generate_tile
         self.map_cache = {}
     
     def dig(self, loc):
+        prev = self.get(loc) 
         self.map_cache[loc] = 0
+        return prev
     
     
     def get(self, loc):
@@ -84,6 +86,7 @@ colors = {
           "white": chr(27)+"[37m",
           "red": chr(27)+"[31m",
           "green": chr(27)+"[32m",
+          "yellow": chr(27)+"[33m",
           }        
 
 current_color = "white"
@@ -112,6 +115,8 @@ def display_vertical_x(g_map, pos, ran):
                 line += set_color("red")+'@'
             elif (x, y, z) not in g_map:
                 line += set_color("white")+'?'
+            elif g_map[(x, y, z)] >= 2:
+                line += set_color("yellow")+"0"
             elif g_map[(x, y, z)] == 1:
                 line += set_color("blue")+"#"
             elif g_map[(x, y, z)] == 0:

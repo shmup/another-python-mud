@@ -18,5 +18,6 @@ def command_handler(p, conn, matcher = match_command):
         command, args = matcher(msg)
         result = command(p, args = args)
         for line in result:
-            conn.push(bytes(line+"\n", 'utf-8'))
-        conn.push(bytes(p.name+": "+msg, 'utf-8'))
+            conn.push(line+"\n")
+        conn.push(p.name+": "+msg+"\n")
+        conn.push("Inventory: "+str(p.inventory)+"\n")

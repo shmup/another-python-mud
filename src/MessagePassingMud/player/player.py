@@ -13,6 +13,7 @@ class Player():
         self.name = name
         self.location = location
         self.local_map = gmap
+        self.inventory = []
         
     def set_location(self, loc):
         x, y, z = loc
@@ -41,7 +42,9 @@ class Player():
             num_dir = dirs[direction]
             for i in range(dist):
                 new_loc = add_dirs(self.location, num_dir)
-                gmap.dig(new_loc)
+                gemstone = gmap.dig(new_loc)
+                if gemstone != 1 and gemstone != 0:
+                    self.inventory.append(gemstone)
                 if not self.set_location(new_loc):
                     return i
             return dist

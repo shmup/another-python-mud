@@ -1,0 +1,23 @@
+
+div.map-box {
+	display:table;
+}
+
+div.tile-row {
+	width:100%;
+	display:table-row;
+}
+
+div.red-tile {
+	width:10px;
+	height:10px;
+	display:table-cell;
+	background-color:red;
+}
+div.black-tile {
+	display:table-cell;
+	background-color:black;
+	color:white;
+	overflow: hidden;
+	line-height: 0.9em;
+}

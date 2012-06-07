@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel=StyleSheet href="style/style.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script> 
+<script language = "javascript">
+
+$(document).ready(function() {
+for(var j = 0; j < 19; j++)
+{
+	$("<div/>", { "class":"tile-row", "id": "row"+j }).appendTo(".map-box");
+	for(var i = 0; i < 33; i++)
+	{
+		var color = "black";
+		
+		$("<div>", {"class":color+"-tile", "id":"_"+i+"_"+j}).html("#").appendTo("#row"+j);
+	}
+}
+   
+
+});
+
+</script>
+</head>
+
+<body>
+<div class = "map-box"></div>
+</body>
+</html>
