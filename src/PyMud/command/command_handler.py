@@ -8,7 +8,6 @@ import command_factory as fact
 import multiprocessing
 logger = multiprocessing.get_logger()
 
-#Todo: Add option to supply queue to avoid timing issues in testing
 
 class CommandProcess(Process):
     
@@ -63,7 +62,7 @@ Ugh, is that really the best option? A Queue proxy? Is this what we've come to?
 No, we'd probably just end up trying to grab the queue proxy which is just as bad
 '''
 class StringCommandHandler(object):
-    def __init__(self, comm_queue):
+    def __init__(self, comm_queue= None):
         self.comm_queue = comm_queue
     def put(self, caller_command):
         print("String command handler called")

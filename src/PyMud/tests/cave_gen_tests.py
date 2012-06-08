@@ -4,14 +4,15 @@ Created on Nov 16, 2011
 @author: Nich
 '''
 import unittest
-import cave_gen
+import mapping.cave_gen as cave_gen
 
 class Test(unittest.TestCase):
 
 
     def setUp(self):
-        self.seed = 1337
-        
+        pass
+
+
     def tearDown(self):
         pass
 

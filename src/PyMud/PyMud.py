@@ -31,7 +31,7 @@ if __name__ == '__main__':
         comm_process.daemon = True
         comm_process.start()
         asyncore.loop()
-    finally:
+    finally: 
         comm_queue.put("exit", True, None)
         asyncore.close_all()
         

@@ -14,7 +14,7 @@ class DefaultHandler(object):
     def handle_data(self, data):
         print("Mrrr, I'm the default handler I'm so cool")
 
-handler_chain = [login.LoginHandler, 
+handler_chain = [#login.LoginHandler, 
                  #AdminCommandHandler, 
                  #UserCommandHandler, 
                  DefaultHandler,

@@ -58,14 +58,12 @@ def display_horizontal(g_map, pos, ran):
     ymin = pos[1] - int(ran/2)
     ymax = pos[1] + int(ran/2)
     print("0"*(ran+3))
-    for j in range(ymin, ymax+1):
+    for i in range(xmin, xmax+1):
         line = "0"
-        for i in range(xmin, xmax+1):
+        for j in range(ymin, ymax+1):
             line += ('#' if g_map[i][j][z] else " ")
         print(line+"0")
     print("0"*(ran+3))        
-
-
 
 def generateNeighboursList():
     l = []

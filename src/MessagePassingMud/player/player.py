@@ -13,6 +13,7 @@ class Player():
         self.name = name
         self.location = location
         self.local_map = gmap
+        self.cache_map = {}
         self.inventory = []
         
     def set_location(self, loc):
@@ -49,6 +50,12 @@ class Player():
                     return i
             return dist
         return 0
+    
+    def get_cache_map(self):
+        return self.cache_map
+    
+    def set_cache_map(self, cmap):
+        self.cache_map = cmap
     
     def set_local_map(self, l_map):
         self.local_map = l_map
