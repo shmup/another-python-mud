@@ -21,14 +21,55 @@ ws.onmessage = function (evt) {
    if(evt.data.substring(0, 5) == '{"gam')
    {
 	map_diff = window.JSON.parse(evt.data)
+	change_map()
    }
-   
+   if(evt.data.substring(0, 5) == '{"inv')
+   {
+	inv = window.JSON.parse(evt.data)
+	set_inventory(inv);
+   }
    
     
 };
 
 
-mapnum = 0
+function get_obj_type(i)
+{
+	return "sapphire";
+}
+
+function set_inventory(inv)
+{
+	$(".inv-box").html("")
+	
+	for(i in inv.inv)
+	{
+		obj_type = i;
+		count = inv.inv[i]
+		
+		$("<div>", {"class":"inv_item "+obj_type}).html(count+"x "+obj_type).appendTo(".inv-box");
+	}
+}
+
+
+function handle_key_down(e)
+{
+	if(e.keyCode == 40)
+	{
+		ws.send("dig 1 d");
+		ws.send("l");
+	}
+	if(e.keyCode == 37)
+	{
+		ws.send("dig 1 w");
+		ws.send("l");
+	}
+	if(e.keyCode == 39)
+	{
+		ws.send("dig 1 e");
+		ws.send("l");
+	}
+}
 
 function change_map(){
 	
@@ -39,25 +80,31 @@ function change_map(){
 		$("#"+tile).removeClass( "tile0 tile1 tile2 tile3", false )
 		$("#"+tile).addClass( "tile"+map.gamemap[tile], true )
 	}
-	ws.send("dig 1 e");
-	ws.send("l");
 }
 
 
 
 $(document).ready(function() {
-for(var j = 0; j < 19; j++)
+for(var j = 19; j >= 0 ; j--)
 {
 	$("<div/>", { "class":"tile-row", "id": "row"+j }).appendTo(".map-box");
 	for(var i = 0; i < 33; i++)
 	{
-		$("<div>", {"class":"tile tile0", "id":i+"_"+j}).html("#").appendTo("#row"+j);
+		if(i == 16 && j == 9)
+		{
+			$("<div>", {"class":"tile ptile", "id":i+"_"+j}).html("o").appendTo("#row"+j);
+			
+		}
+		else
+		{
+			$("<div>", {"class":"tile tile0", "id":i+"_"+j}).html("#").appendTo("#row"+j);
+		}
 	}
 }
    
 
+document.getElementById('kinput').onkeydown = handle_key_down;
 
-window.setInterval(change_map, 1000);
 
 });
 
@@ -65,6 +112,11 @@ window.setInterval(change_map, 1000);
 </head>
 
 <body>
+<div class = "container">
 <div class = "map-box"></div>
+<div class = "inv-box"></div>
+</div>
+<div class = "chat-box"><input id = "kinput" type="text" size="30"></div>
+
 </body>
 </html>

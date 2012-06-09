@@ -14,7 +14,7 @@ class Player():
         self.location = location
         self.local_map = gmap
         self.cache_map = {}
-        self.inventory = []
+        self.inventory = [2]
         
     def set_location(self, loc):
         x, y, z = loc
@@ -65,6 +65,17 @@ class Player():
         
     def set_name(self, name):
         self.name = name
+        
+    def get_inventory(self):
+        new_dict = {}
+        num_sapp = self.inventory.count(2)
+        num_em = self.inventory.count(3)
+        if num_sapp > 0:
+            new_dict["sapphire"] = num_sapp
+        if num_em > 0:
+            new_dict["emerald"] = num_em
+        return new_dict
+            
         
         
 default = Player("Nicholas", (24, 48, 0))

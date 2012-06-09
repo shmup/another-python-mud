@@ -1,6 +1,27 @@
-
+div.container
+{
+	float:none;
+	overflow: auto;
+	border: 1px solid blue;
+}
 div.map-box {
+	float:left;
 	display:table;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.inv-box {
+	float:left;
+	width:200px;
+	height:400px;
+	background-color:black;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.chat-box {
+	float:none;
 }
 
 div.tile-row {
@@ -12,15 +33,28 @@ div.tile{
 	width:10px;
 	height:10px;
 	display:table-cell;
+	background-color:black;
+}
+div.tile3 {
+	color:green;
+}
+div.tile2 {
+	color:blue;
 }
 
 div.tile1 {
-	background-color:black;
 	color:white;
 }
 div.tile0 {
-	
-	background-color:black;
 	color:black;
-	
+}
+
+div.ptile{
+	color:red;
+}
+div.sapphire {
+	color:blue;
+}
+div.emerald {
+	color:green;
 }

@@ -37,3 +37,5 @@ def json_command_handler(p, conn, matcher = match_command):
         result = command(p, args = args)
         for item in result:
             conn.push(json.dumps(item))
+        conn.push(json.dumps({"inv":p.get_inventory()}));    
+        

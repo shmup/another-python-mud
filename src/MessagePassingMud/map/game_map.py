@@ -109,12 +109,12 @@ def normalize(gamemap, pos, map_size):
     print(pos)
     xpos, ypos, zpos = pos
     z_size = int(map_size[1]/2)
-    y_size = int(map_size[0]/2)
+    x_size = int(map_size[0]/2)
     
     for key, _value in gamemap.items():
         x, y, z = key
-        if x == xpos:
-            str_key = str(y-ypos+y_size)+"_"+str(z-zpos+z_size) 
+        if y == ypos:
+            str_key = str(x-xpos+x_size)+"_"+str(z-zpos+z_size) 
             new_map[str_key] = gamemap[key]
     
     return new_map

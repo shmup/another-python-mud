@@ -11,8 +11,8 @@ const = 125
 
 
 
-def generate(odds, i, j, k):
-    seed = str(i)+str(j)+str(k)
+def generate(odds, i, j, k, offset):
+    seed = str(i)+str(j)+str(k)+str(offset)
     random.seed(seed)
     number = random.randint(1, odds)
     return 1 if number == 1 else 0
@@ -26,7 +26,10 @@ def generate_terrain(i, j, k):
     return val
 
 def generate_gemstone(i, j, k):
-    return 2 if generate(100, i, j, k) == 1 else 0
+    sapp = 2 if generate(100, i, j, k, 0) == 1 else 0
+    em = 3 if generate(100, i, j, k, 50) == 1 else 0
+    
+    return sapp or em or 0 
 
 
 def generate_tile(i, j, k):
