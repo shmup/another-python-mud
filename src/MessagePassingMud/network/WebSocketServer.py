@@ -28,7 +28,6 @@ class EchoWebSocket(tornado.websocket.WebSocketHandler):
         if not self.data_handler is None:
             self.data_handler.send(message)
         
-
     def on_close(self):
         print("WebSocket closed")
 
