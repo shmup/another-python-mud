@@ -1,0 +1,144 @@
+<html>
+<head>
+<link rel=StyleSheet href="style/style.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script> 
+<script language = "javascript">
+//idea 1: Server sends a "windowed" view of the map. This windowed view is 0 based, regardless of the actual coordinate the user is at
+//Sub-idea 1: The server only sends the differences from the last request, not the full map
+
+
+
+var map_diff;				
+
+var ws = new WebSocket("ws://localhost:8888/websocket");
+
+ws.onopen = function() {
+   ws.send("Nicholas");
+   ws.send("a");
+   ws.send("l");
+};
+
+ws.onmessage = function (evt) {
+   if(evt.data.substring(0, 5) == '{"gam')
+   {
+	map_diff = window.JSON.parse(evt.data)
+	change_map()
+   }
+   if(evt.data.substring(0, 5) == '{"inv')
+   {
+	inv = window.JSON.parse(evt.data)
+	set_inventory(inv);
+   }
+   
+    
+};
+
+
+
+
+function set_inventory(inv)
+{
+	$(".inv-box").html("")
+	
+	for(i in inv.inv)
+	{
+		obj_type = i;
+		count = inv.inv[i]
+		
+		$("<div>", {"class":"inv_item "+obj_type}).html(count+"x "+obj_type).appendTo(".inv-box");
+	}
+}
+
+
+function handle_key_down(e)
+{
+	if(e.keyCode == 40)
+	{
+		ws.send("dig 1 d");
+		ws.send("l");
+	}
+	if(e.keyCode == 37)
+	{
+		ws.send("dig 1 w");
+		ws.send("l");
+	}
+	if(e.keyCode == 39)
+	{
+		ws.send("dig 1 e");
+		ws.send("l");
+	}
+	if(e.keyCode == 38)
+	{
+		ws.send("up");
+		ws.send("l");
+	}
+}
+
+function change_map(){
+	var char_map = "(o)/^\\0[]S ";
+	
+	
+	var map = map_diff
+	for(var tile in map.gamemap)
+	{
+		if(tile != "16_9"){
+		
+			if(map.gamemap[tile] < 50)
+			{
+				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 ship-tile")
+				$("#"+tile).addClass( "tile"+map.gamemap[tile] )
+				$("#"+tile).html("#");
+			}
+			else if(map.gamemap[tile] >= 100)
+			{
+				tnum = map.gamemap[tile] - 100;
+				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 ship-tile" )
+				$("#"+tile).addClass( "ship-tile" );
+				$("#"+tile).html(char_map.charAt(tnum));
+			}
+		}
+		
+	}
+}
+
+
+
+$(document).ready(function() {
+for(var j = 19; j >= 0 ; j--)
+{
+	$("<div/>", { "class":"tile-row", "id": "row"+j }).appendTo(".map-box");
+	for(var i = 0; i < 33; i++)
+	{
+		if(i == 16 && j == 9)
+		{
+			$("<div>", {"class":"tile ptile", "id":i+"_"+j}).html("o").appendTo("#row"+j);
+			
+		}
+		else
+		{
+			$("<div>", {"class":"tile tile0", "id":i+"_"+j}).html("#").appendTo("#row"+j);
+		}
+	}
+}
+   
+
+document.getElementById('kinput').onkeyup = handle_key_down;
+
+
+});
+
+</script>
+</head>
+
+<body>
+<div class = "container">
+<div class = "map-box"></div>
+<div class = "container2">
+<div class = "upgr-box">Jetpack<br/></div>
+<div class = "inv-box"></div>
+</div>
+</div>
+<div class = "chat-box"><input id = "kinput" type="text" size="30"></div>
+
+</body>
+</html>

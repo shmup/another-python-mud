@@ -1,0 +1,76 @@
+div.container
+{
+	float:none;
+	overflow: auto;
+	border: 1px solid blue;
+}
+div.container2
+{
+	float:left;
+	overflow: auto;
+	border: 1px solid red;
+}
+div.upgr-box {
+	width:200px;
+	height:100px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.map-box {
+	float:left;
+	display:table;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.inv-box {
+	width:200px;
+	height:300px;
+	background-color:black;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.chat-box {
+	float:none;
+}
+
+div.tile-row {
+	width:100%;
+	display:table-row;
+}
+
+div.tile{
+	width:10px;
+	height:10px;
+	display:table-cell;
+	background-color:black;
+}
+div.tile3 {
+	color:green;
+}
+div.tile2 {
+	color:blue;
+}
+
+div.tile1 {
+	color:white;
+}
+div.tile0 {
+	color:black;
+}
+div.ship-tile{
+	color:yellow;
+}
+div.ptile{
+	color:red;
+}
+div.sapphire {
+	color:blue;
+}
+div.emerald {
+	color:green;
+}
