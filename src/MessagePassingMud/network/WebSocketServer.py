@@ -20,8 +20,9 @@ class EchoWebSocket(tornado.websocket.WebSocketHandler):
     def set_data_handler(self, data_handler):
         self.data_handler = data_handler
 
-    def push(self, message):
-        self.write_message(message)
+    def push(self, dest, message):
+        import json
+        self.write_message(json.dumps({dest:message}))
     
     def on_message(self, message):
         if not self.data_handler is None:

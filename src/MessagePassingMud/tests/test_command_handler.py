@@ -27,13 +27,13 @@ class TestCommandHandler(unittest.TestCase):
 
     def testSimpleCommand(self):
         self.ch.send("say Hello World")
-        self.assertEqual(self.c.msgs, [b"executing say with arguments Hello World\n", b"Nicholas: say Hello World"])
+        self.assertEqual(self.c.msgs, [("info", "executing say with arguments Hello World")])
         
     def testMultipleCommands(self):
         self.ch.send("say Hello World")
         self.ch.send("up")
         self.ch.send("move 2 n")
-        self.assertEqual(self.c.msgs, [b"executing say with arguments Hello World\n", b"Nicholas: say Hello World",b"executing up with arguments \n", b"Nicholas: up", b"executing move with arguments 2 n\n", b"Nicholas: move 2 n"])
+        self.assertEqual(self.c.msgs, [("info", "executing say with arguments Hello World"),  ("info", "executing up with arguments "),  ("info", "executing move with arguments 2 n")])
 
 
 if __name__ == "__main__":

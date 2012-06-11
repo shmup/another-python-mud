@@ -9,7 +9,7 @@ class Connection():
     def __init__(self):
         self.msgs = []
     
-    def push(self, msg):
-        self.msgs.append(msg)
+    def push(self, dest, msg):
+        self.msgs.append((dest, msg))
         
     

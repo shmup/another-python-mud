@@ -7,6 +7,7 @@
 //Sub-idea 1: The server only sends the differences from the last request, not the full map
 
 
+
 var map_diff;				
 
 var ws = new WebSocket("ws://localhost:8888/websocket");
@@ -33,10 +34,7 @@ ws.onmessage = function (evt) {
 };
 
 
-function get_obj_type(i)
-{
-	return "sapphire";
-}
+
 
 function set_inventory(inv)
 {
@@ -69,16 +67,37 @@ function handle_key_down(e)
 		ws.send("dig 1 e");
 		ws.send("l");
 	}
+	if(e.keyCode == 38)
+	{
+		ws.send("up");
+		ws.send("l");
+	}
 }
 
 function change_map(){
+	var char_map = "(o)/^\\0[]S ";
+	
 	
 	var map = map_diff
 	for(var tile in map.gamemap)
 	{
+		if(tile != "16_9"){
 		
-		$("#"+tile).removeClass( "tile0 tile1 tile2 tile3", false )
-		$("#"+tile).addClass( "tile"+map.gamemap[tile], true )
+			if(map.gamemap[tile] < 50)
+			{
+				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 ship-tile")
+				$("#"+tile).addClass( "tile"+map.gamemap[tile] )
+				$("#"+tile).html("#");
+			}
+			else if(map.gamemap[tile] >= 100)
+			{
+				tnum = map.gamemap[tile] - 100;
+				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 ship-tile" )
+				$("#"+tile).addClass( "ship-tile" );
+				$("#"+tile).html(char_map.charAt(tnum));
+			}
+		}
+		
 	}
 }
 
@@ -103,7 +122,7 @@ for(var j = 19; j >= 0 ; j--)
 }
    
 
-document.getElementById('kinput').onkeydown = handle_key_down;
+document.getElementById('kinput').onkeyup = handle_key_down;
 
 
 });
@@ -114,7 +133,10 @@ document.getElementById('kinput').onkeydown = handle_key_down;
 <body>
 <div class = "container">
 <div class = "map-box"></div>
+<div class = "container2">
+<div class = "upgr-box">Jetpack<br/></div>
 <div class = "inv-box"></div>
+</div>
 </div>
 <div class = "chat-box"><input id = "kinput" type="text" size="30"></div>
 

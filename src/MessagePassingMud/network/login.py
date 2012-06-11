@@ -7,7 +7,7 @@ Created on Nov 27, 2011
 from MessagePassingMud.model.account import make_account, get
 from MessagePassingMud.player.player import get_default
 from MessagePassingMud.utils.coroutine import coroutine
-from MessagePassingMud.command.command_handler import json_command_handler
+from MessagePassingMud.command.command_handler import command_handler
 
 @coroutine
 def handle_login(conn):
@@ -23,7 +23,7 @@ def handle_login(conn):
                     make_account(username, password)
                     #Replace the below line with code to fetch the account's player
                     p = get_default()
-                    conn.set_data_handler(json_command_handler(p, conn))
+                    conn.set_data_handler(command_handler(p, conn))
                     yield
                 else:
                     conn.push("The passwords didn't match!")
@@ -35,7 +35,7 @@ def handle_login(conn):
                 conn.push("Welcome!")
                 #Replace the below line with code to fetch the account's player
                 p = get_default()
-                conn.set_data_handler(json_command_handler(p, conn))
+                conn.set_data_handler(command_handler(p, conn))
                 yield
             else:
                 conn.push("Bad password")

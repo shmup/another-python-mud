@@ -4,6 +4,21 @@ div.container
 	overflow: auto;
 	border: 1px solid blue;
 }
+div.container2
+{
+	float:left;
+	overflow: auto;
+	border: 1px solid red;
+}
+div.upgr-box {
+	width:200px;
+	height:100px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
 div.map-box {
 	float:left;
 	display:table;
@@ -12,9 +27,8 @@ div.map-box {
 	border-color:gray;
 }
 div.inv-box {
-	float:left;
 	width:200px;
-	height:400px;
+	height:300px;
 	background-color:black;
 	border-width:5px;	
 	border-style:groove;
@@ -48,7 +62,9 @@ div.tile1 {
 div.tile0 {
 	color:black;
 }
-
+div.ship-tile{
+	color:yellow;
+}
 div.ptile{
 	color:red;
 }

@@ -5,7 +5,7 @@ Created on May 22, 2012
 '''
 from MessagePassingMud.map.game_map import gmap
 from MessagePassingMud.map.directions import dirs, add_dirs
-
+from MessagePassingMud.upgrades.jetpack import Jetpack
 
 
 class Player():
@@ -15,15 +15,16 @@ class Player():
         self.local_map = gmap
         self.cache_map = {}
         self.inventory = [2]
+        self.upgrades = []
         
     def set_location(self, loc):
         x, y, z = loc
         if self.local_map.get((x, y, z)) == 0 or \
            self.local_map.get(self.location) == 1:
-            i = 1
-            while self.local_map.get((x, y, z-i)) == 0: 
-                i = i + 1
-            z = z - (i-1)
+            #i = 1
+            #while self.local_map.get((x, y, z-i)) == 0: 
+            #    i = i + 1
+            #z = z - (i-1)
             self.location = (x, y, z)
             return True
         return False
@@ -75,10 +76,20 @@ class Player():
         if num_em > 0:
             new_dict["emerald"] = num_em
         return new_dict
-            
+    def add_upgrade(self, upgrade):
+        self.upgrades.append(upgrade)
+    
+    def get_upgrade_commands(self):
+        upgrade_commands = {}
+        for u in self.upgrades:
+            for k, comm in u.commands_list.items():
+                upgrade_commands[k] = comm
+                
+        return upgrade_commands
         
         
-default = Player("Nicholas", (24, 48, 0))
+default = Player("Nicholas", (0, 0, 1))
+default.add_upgrade(Jetpack())
 
 def get_default():
     return default

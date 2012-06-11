@@ -5,7 +5,7 @@ Created on Jun 3, 2012
 '''
 from MessagePassingMud.map.map_generators import generate_tile
 from MessagePassingMud.map.map_generation_functions import generate_blind, neighbour_count 
-
+from MessagePassingMud.map.start_ship import generate_starting_ship
 
 
 
@@ -16,7 +16,7 @@ class GameMap(object):
     '''
     def __init__(self):
         self.gen = generate_tile
-        self.map_cache = {}
+        self.map_cache = generate_starting_ship((0, 0, 0))
     
     def dig(self, loc):
         prev = self.get(loc) 
@@ -99,7 +99,7 @@ def show_map(p = None, size = (33, 19), args = None):
     p.set_cache_map(norm_map)
     #gen_vert_x = display_vertical_x(cache_map, pos, size)
     
-    yield {"gamemap":diff_map}
+    yield ("gamemap", diff_map)
     #for line in gen_vert_x:
         #yield line
     

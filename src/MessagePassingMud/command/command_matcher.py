@@ -19,7 +19,8 @@ commands = {"say":{"function":say, "num_args":"unlimited"},
             }
 
 
-def match_command(msg, comms = commands):
+def match_command(p, msg, comms = commands):
+    print("Got: "+msg)
     split_msg = msg.split(" ")
     comm_name = split_msg[0]
     if comm_name in comms:
@@ -28,7 +29,14 @@ def match_command(msg, comms = commands):
         # If the number of args is unlimited, or the correct number
         if num_args == "unlimited" or num_args == len(split_msg[1:]):
             return command["function"], split_msg[1:]
-    
+    elif comm_name in p.get_upgrade_commands():
+        comms = p.get_upgrade_commands()
+        command = comms[comm_name]
+        num_args = command["num_args"]
+        # If the number of args is unlimited, or the correct number
+        if num_args == "unlimited" or num_args == len(split_msg[1:]):
+            return command["function"], split_msg[1:]
+        
     return default_message, None
 
 
