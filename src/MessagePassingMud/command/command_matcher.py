@@ -20,7 +20,6 @@ commands = {"say":{"function":say, "num_args":"unlimited"},
 
 
 def match_command(p, msg, comms = commands):
-    print("Got: "+msg)
     split_msg = msg.split(" ")
     comm_name = split_msg[0]
     if comm_name in comms:

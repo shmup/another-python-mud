@@ -19,10 +19,10 @@ class Jetpack(object):
             x, y, z = p.get_location()
             p.set_location((x, y, z+1))
             loc = p.get_location()
-            return ("You move 1 step to the south (Your position is: "+str(loc)+")",)
+            return ("info", "You move 1 step to the up (Your position is: "+str(loc)+")"),
         else:
             self.fuel = 100
-            return ("You have run out of fuel. For Debug purposes, it has been set to 100 again", )
+            return ("info", "You have run out of fuel. For Debug purposes, it has been set to 100 again"),
     
         
     

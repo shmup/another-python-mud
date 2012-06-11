@@ -31,6 +31,7 @@ def command_handler(p, conn, matcher = match_command):
         msg = yield
         command, args = matcher(p, msg)
         result = command(p, args = args)
+        
         for item in result:
             dest, msg = item
             conn.push(dest, msg)

@@ -10,6 +10,12 @@ div.container2
 	overflow: auto;
 	border: 1px solid red;
 }
+div.container3
+{
+	float:left;
+	overflow: auto;
+	border: 1px solid green;
+}
 div.upgr-box {
 	width:200px;
 	height:100px;
@@ -19,8 +25,16 @@ div.upgr-box {
 	border-style:groove;
 	border-color:gray;
 }
+div.info-box {
+	width:330px;
+	height:50px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
 div.map-box {
-	float:left;
 	display:table;
 	border-width:5px;	
 	border-style:groove;
