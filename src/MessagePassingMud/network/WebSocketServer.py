@@ -13,7 +13,7 @@ class MainHandler(tornado.web.RequestHandler):
         self.write("Hello, world")
 
 class EchoWebSocket(tornado.websocket.WebSocketHandler):
-    def open(self):
+    def open(self): #@ReservedAssignment
         print("WebSocket opened")
         self.data_handler = login.handle_login(self)
         

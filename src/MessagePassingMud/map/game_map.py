@@ -35,54 +35,6 @@ class GameMap(object):
             return self.map_cache[loc]
             
     
-        
-
-colors = {
-          "blue": chr(27)+"[34m",
-          "cyan": chr(27)+"[36m",
-          "white": chr(27)+"[37m",
-          "red": chr(27)+"[31m",
-          "green": chr(27)+"[32m",
-          "yellow": chr(27)+"[33m",
-          }        
-
-current_color = "white"
-def set_color(color):
-    global current_color
-    if color == current_color or not color in colors:
-        return ""
-    else:
-        current_color = color
-        return colors[color]         
-        
-
-
-def display_vertical_x(g_map, pos, ran):
-    y = pos[1]
-    zmin = pos[2] - int(ran[1]/2)
-    zmax = pos[2] + int(ran[1]/2)
-    xmin = pos[0] - int(ran[0]/2)
-    xmax = pos[0] + int(ran[0]/2)
-    yield "0"*(ran[0]+2)
-    for z in range(zmax, zmin, -1):
-        line = "0"
-        for x in range(xmin, xmax):
-            
-            if (x, y, z) == pos:
-                line += set_color("red")+'@'
-            elif (x, y, z) not in g_map:
-                line += set_color("white")+'?'
-            elif g_map[(x, y, z)] >= 2:
-                line += set_color("yellow")+"0"
-            elif g_map[(x, y, z)] == 1:
-                line += set_color("blue")+"#"
-            elif g_map[(x, y, z)] == 0:
-                line += " " if g_map[(x, y-1, z)] == 0 else set_color("cyan")+"#"
-        yield line+set_color("white")+"0"
-    yield "0"*(ran[0]+2)
-
-
-
 gmap = GameMap()
 
 
