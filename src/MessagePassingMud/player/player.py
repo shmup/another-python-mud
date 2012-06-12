@@ -68,14 +68,15 @@ class Player():
         self.name = name
         
     def get_inventory(self):
-        new_dict = {}
-        num_sapp = self.inventory.count(2)
-        num_em = self.inventory.count(3)
-        if num_sapp > 0:
-            new_dict["sapphire"] = num_sapp
-        if num_em > 0:
-            new_dict["emerald"] = num_em
-        return new_dict
+        #new_dict = {}
+        #num_sapp = self.inventory.count(2)
+        #num_em = self.inventory.count(3)
+        #if num_sapp > 0:
+        #    new_dict["sapphire"] = num_sapp
+        #if num_em > 0:
+        #    new_dict["emerald"] = num_em
+        return self.inventory
+    
     def add_upgrade(self, upgrade):
         self.upgrades.append(upgrade)
     

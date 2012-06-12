@@ -4,6 +4,17 @@ Created on May 22, 2012
 @author: Nich
 '''
 
+def inv(p, args = None):
+    new_dict = {}
+    inv = p.get_inventory()
+    num_sapp = inv.count(2)
+    num_em = inv.count(3)
+    if num_sapp > 0:
+        new_dict["sapphire"] = num_sapp
+    if num_em > 0:
+        new_dict["emerald"] = num_em
+    return ("inv", new_dict)
+
 def say(p = None, args = None):
     if not args is None: 
         return ("info", "You said: "+" ".join(args)),
