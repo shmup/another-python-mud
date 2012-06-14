@@ -16,6 +16,8 @@ class Player():
         self.cache_map = {}
         self.inventory = [2]
         self.upgrades = []
+        self.gravity = -1
+        self.velocity = 0
         
     def set_location(self, loc):
         x, y, z = loc
@@ -28,6 +30,12 @@ class Player():
             self.location = (x, y, z)
             return True
         return False
+    
+    def get_velocity(self):
+        return self.velocity
+    
+    def get_effective_gravity(self):
+        return self.gravity
         
     def move(self, dist, direction):
         if direction in dirs:
@@ -94,3 +102,6 @@ default.add_upgrade(Jetpack())
 
 def get_default():
     return default
+
+def get_all_players():
+    return [get_default()]

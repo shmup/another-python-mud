@@ -13,6 +13,7 @@ class Jetpack(object):
         self.fuel = fuel
         self.commands_list = {"up":{"function":self.up, "num_args":0},}
         
+        
     def up(self, p, args = None):
         if self.fuel != 0:
             self.fuel = self.fuel - 1

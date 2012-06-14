@@ -40,17 +40,5 @@ def handle_login(conn):
             else:
                 conn.push("login", "Bad password")
                 
-'''
-import time
-@coroutine
-def echo_handler(p, conn):
-    import show_map
-    while True:
-        msg = yield
-        s = show_map.show_map()
-        for line in s:
-            conn.push(bytes(line, 'utf-8'))
-        conn.push(bytes(p.name+": "+msg, 'utf-8'))
-        
-'''
+
       

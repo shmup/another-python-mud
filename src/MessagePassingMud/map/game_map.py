@@ -6,7 +6,7 @@ Created on Jun 3, 2012
 from MessagePassingMud.map.map_generators import generate_tile
 from MessagePassingMud.map.map_generation_functions import generate_blind, neighbour_count 
 from MessagePassingMud.map.start_ship import generate_starting_ship
-
+from MessagePassingMud.model.data_map import get_stored_value, set_stored_value, dump_map_to_db
 
 
 
@@ -19,23 +19,44 @@ class GameMap(object):
         self.map_cache = generate_starting_ship((0, 0, 0))
     
     def dig(self, loc):
-        prev = self.get(loc) 
-        self.map_cache[loc] = 0
-        return prev
+        if(self.get(loc) == 0):
+            return 0
+        else:
+            prev = self.get(loc) 
+            self.set(loc, 0)
+            set_stored_value(loc, 0)
+            return prev
     
+    def set(self, loc, val): #@ReservedAssignment
+        self.map_cache[loc] = val
+        #set_stored_value(loc, val)
     
     def get(self, loc):
         if loc in self.map_cache:
             return self.map_cache[loc]
+        
+        val = get_stored_value(loc)
+        if  val != None:
+            self.map_cache[loc] = val
+            return val
+        
         else:
             if neighbour_count(self.gen, loc):
-                self.map_cache[loc] = 1
+                self.set(loc, 1)
             else:
-                self.map_cache[loc] = self.gen(*loc)
+                self.set(loc, self.gen(*loc))
             return self.map_cache[loc]
-            
+    def dump_to_db(self):
+        d_map = []
+        for key, value in self.map_cache.items():
+            x, y, z, = key
+            d_map.append((x, y, z, value))
+        return d_map
     
 gmap = GameMap()
+
+def dump_to_db():
+    dump_map_to_db(gmap.dump_to_db())
 
 
 def show_map(p = None, size = (33, 19), args = None):
