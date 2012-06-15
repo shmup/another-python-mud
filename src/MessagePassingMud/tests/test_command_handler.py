@@ -4,11 +4,11 @@ Created on Jun 4, 2012
 @author: Nich
 '''
 import unittest
-from MessagePassingMud.command.command_handler import command_handler
+from command_handler import command_handler
 #from mocks.mock_player import Player
-from MessagePassingMud.player.player import get_default
-from MessagePassingMud.tests.mocks.mock_connection import Connection
-from MessagePassingMud.tests.mocks.mock_command_matcher import match_command
+from player.player import get_default
+from tests.mocks.mock_connection import Connection
+from tests.mocks.mock_command_matcher import match_command
 
 
 class TestCommandHandler(unittest.TestCase):

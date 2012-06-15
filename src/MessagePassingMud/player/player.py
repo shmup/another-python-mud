@@ -3,9 +3,9 @@ Created on May 22, 2012
 
 @author: Nich
 '''
-from MessagePassingMud.map.game_map import gmap
-from MessagePassingMud.map.directions import dirs, add_dirs
-from MessagePassingMud.upgrades.jetpack import Jetpack
+from map.game_map import gmap
+from map.directions import dirs, add_dirs
+from upgrades.jetpack import Jetpack
 
 
 class Player():

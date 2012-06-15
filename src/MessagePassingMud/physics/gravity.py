@@ -3,7 +3,7 @@ Created on Jun 12, 2012
 
 @author: Nich
 '''
-from MessagePassingMud.player.player import get_all_players
+from player.player import get_all_players
 
 
 def gravity(p):

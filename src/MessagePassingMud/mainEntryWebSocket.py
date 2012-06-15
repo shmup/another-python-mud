@@ -5,7 +5,7 @@ Created on Nov 27, 2011
 '''
 import tornado.ioloop
 import tornado.web
-from MessagePassingMud.network.WebSocketServer import MainHandler, EchoWebSocket
+from network.WebSocketServer import MainHandler, EchoWebSocket
 from physics.gravity import gravity_callback
 from map.game_map import dump_to_db
 

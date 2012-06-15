@@ -3,8 +3,8 @@ Created on May 22, 2012
 
 @author: Nich
 '''
-from MessagePassingMud.utils.coroutine import coroutine
-from MessagePassingMud.command.command_matcher import match_command
+from utils.coroutine import coroutine
+from command.command_matcher import match_command
 
         
 @coroutine

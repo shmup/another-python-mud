@@ -6,7 +6,7 @@ Created on Jun 6, 2012
 
 import tornado.web
 import tornado.websocket
-import MessagePassingMud.network.login as login
+import network.login as login
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):

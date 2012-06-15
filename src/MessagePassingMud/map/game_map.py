@@ -3,10 +3,10 @@ Created on Jun 3, 2012
 
 @author: Nich
 '''
-from MessagePassingMud.map.map_generators import generate_tile
-from MessagePassingMud.map.map_generation_functions import generate_blind, neighbour_count 
-from MessagePassingMud.map.start_ship import generate_starting_ship
-from MessagePassingMud.model.data_map import get_stored_value, set_stored_value, dump_map_to_db
+from map.map_generators import generate_tile
+from map.map_generation_functions import generate_blind, neighbour_count 
+from map.start_ship import generate_starting_ship
+from model.data_map import get_stored_value, set_stored_value, dump_map_to_db
 
 
 

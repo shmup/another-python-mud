@@ -4,10 +4,10 @@ Created on Nov 27, 2011
 @author: Nich
 '''
 
-from MessagePassingMud.model.account import make_account, get
-from MessagePassingMud.player.player import get_default
-from MessagePassingMud.utils.coroutine import coroutine
-from MessagePassingMud.command.command_handler import command_handler
+from model.account import make_account, get
+from player.player import get_default
+from utils.coroutine import coroutine
+from command.command_handler import command_handler
 
 @coroutine
 def handle_login(conn):
