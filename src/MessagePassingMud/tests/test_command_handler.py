@@ -5,20 +5,20 @@ Created on Jun 4, 2012
 '''
 import unittest
 from command_handler import command_handler
-#from mocks.mock_player import Player
-from player.player import get_default
+from mocks.mock_player import Player
+#from player.player import Player
 from tests.mocks.mock_connection import Connection
 from tests.mocks.mock_command_matcher import match_command
 
 
 class TestCommandHandler(unittest.TestCase):
 
-
     def setUp(self):
-        p = get_default()
+        p = Player()
         self.c = Connection()
+        cs = {}
         cm = match_command
-        self.ch = command_handler(p, self.c, cm)
+        self.ch = command_handler(p, self.c, cm, cs)
 
 
     def tearDown(self):

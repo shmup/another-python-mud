@@ -30,8 +30,8 @@ def generate_starting_ship(pos):
     new_dict = {}
     for key in base_dict.keys():
         x, z = key
-        px, py, pz = pos
-        new_dict[(x + px, py, -(pz + z))] = base_dict[key]
+        px, pz = pos
+        new_dict[(x + px, -(pz + z))] = base_dict[key]
         
     return new_dict
     

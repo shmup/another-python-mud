@@ -38,4 +38,3 @@ def make_account(username, password):
     session.commit()
 
     
-Base.metadata.create_all(engine)

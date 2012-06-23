@@ -6,37 +6,21 @@ Created on Jun 7, 2012
 
 
 
-#candidate for moving
-def neighbour_count(gen, loc):
-    acc = 0
-    for n in neighbours(loc):
-        x = loc[0]+n[0]  
-        y = loc[1]+n[1]
-        z = loc[2]+n[2]
-        if(gen(x, y, z) == 1):
-            acc = acc+1
-        if acc >= 13:
-            return True
-#candidate for moving                
-def neighbours(pos):
-    for k in range(-1, 2):
-        for j in range(-1, 2):
-            for i in range(-1, 2):
-                if (i, j, k) == (0, 0, 0):
-                    continue
-                yield (i+pos[0], j+pos[1], k+pos[2])
-
+from map_generators import neighbours
 
 def generate(pos, size, gamemap):
+    x, y = pos
+    len_x, len_y = size
+    
     gen_map = {}
-    for k in range(size[2]):
-        for j in range(size[1]):
-            for i in range(size[0]):
-                gen_map[(i, j, k)] = gamemap.get((i, j, k))
+    
+    for j in range(y - int(len_y/2), y + int(len_y/2)):
+        for i in range(x - int(len_x/2), x + int(len_x/2)):
+            gen_map[(i, j)] = gamemap.get((i, j))
     return gen_map
     
 def generate_blind(pos, size, gamemap):
-    bounds = ((pos[0] - int(size[0] / 2), pos[0] + int(size[0] / 2)), (pos[1] - int(size[1] / 2), pos[1] + int(size[1] / 2)), (pos[2] - int(size[2] / 2), pos[2] + int(size[2] / 2)))        
+    bounds = ((pos[0] - int(size[0] / 2), pos[0] + int(size[0] / 2)), (pos[1] - int(size[1] / 2), pos[1] + int(size[1] / 2)))        
     gen_map = {}
     generate_blind_recur(pos, gen_map, bounds, [], gamemap)
     return gen_map
@@ -44,8 +28,7 @@ def generate_blind(pos, size, gamemap):
             
 def generate_blind_recur(pos, gen_map, bounds, visited, gamemap):
     if pos[0] > bounds[0][0] and pos[0] < bounds[0][1] and \
-       pos[1] > bounds[1][0] and pos[1] < bounds[1][1] and \
-       pos[2] > bounds[2][0] and pos[2] < bounds[2][1]:
+       pos[1] > bounds[1][0] and pos[1] < bounds[1][1]:
         
         gen_map[pos] = gamemap.get(pos)
         
@@ -54,3 +37,19 @@ def generate_blind_recur(pos, gen_map, bounds, visited, gamemap):
                 if n not in visited:
                     visited.append(n)
                     generate_blind_recur(n, gen_map, bounds, visited, gamemap)
+
+def generate_flashlight(pos, direction, size, gamemap):
+    num_dir = -1 if direction == "left" else 1
+    x, z = pos
+    gen_map = {}
+    for i in range(size):
+        curr_size = i
+        for j in range(curr_size):
+            curr_x = x+(i*num_dir)
+            curr_z = z+j
+            curr_pos = (curr_x, curr_z)
+            tile = gamemap.get(curr_pos)
+            gen_map[curr_pos] = tile
+            if tile >= 1 and tile <= 100:
+                break
+    return gen_map

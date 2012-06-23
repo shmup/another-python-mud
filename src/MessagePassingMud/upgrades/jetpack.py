@@ -17,8 +17,8 @@ class Jetpack(object):
     def up(self, p, args = None):
         if self.fuel != 0:
             self.fuel = self.fuel - 1
-            x, y, z = p.get_location()
-            p.set_location((x, y, z+1))
+            x, y = p.get_location()
+            p.set_location((x, y+1))
             loc = p.get_location()
             return ("info", "You move 1 step to the up (Your position is: "+str(loc)+")"),
         else:

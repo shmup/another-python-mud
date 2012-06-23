@@ -91,14 +91,14 @@ function change_map(){
 		
 			if(map.gamemap[tile] < 50)
 			{
-				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 ship-tile")
+				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 tile4 tile5 tile21 tile22 tile23 tile24 tile25 ship-tile")
 				$("#"+tile).addClass( "tile"+map.gamemap[tile] )
-				$("#"+tile).html("#");
+				$("#"+tile).html(" ");
 			}
 			else if(map.gamemap[tile] >= 100)
 			{
 				tnum = map.gamemap[tile] - 100;
-				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 ship-tile" )
+				$("#"+tile).removeClass( "tile0 tile1 tile2 tile3 tile4 tile5 tile21 tile22 tile23 tile24 tile25 ship-tile" )
 				$("#"+tile).addClass( "ship-tile" );
 				$("#"+tile).html(char_map.charAt(tnum));
 			}
@@ -122,7 +122,7 @@ for(var j = 19; j >= 0 ; j--)
 		}
 		else
 		{
-			$("<div>", {"class":"tile tile0", "id":i+"_"+j}).html("#").appendTo("#row"+j);
+			$("<div>", {"class":"tile tile0", "id":i+"_"+j}).html(" ").appendTo("#row"+j);
 		}
 	}
 }
@@ -143,8 +143,18 @@ document.getElementById('kinput').onkeyup = handle_key_down;
 		<div class = "info-box"></div>
 	</div>
 	<div class = "container2">
-		<div class = "upgr-box">Jetpack<br/></div>
+		<div class = "upgr-box"></div>
 		<div class = "inv-box"></div>
+	</div>
+	<div class = "shop-container">
+		<div class = "shop-left">
+			<div class = "shop-player-inv"></div>
+			<div class = "shop-player-buy"></div>
+		</div>
+		<div class = "shop-right">
+			<div class = "shop-inv"></div>
+			<div class = "shop-buy"></div>
+		</div>
 	</div>
 </div>
 <div class = "chat-box"><input id = "kinput" type="text" size="30"></div>

@@ -3,20 +3,24 @@ Created on Jun 3, 2012
 
 @author: Nich
 '''
-from map.map_generators import generate_tile
-from map.map_generation_functions import generate_blind, neighbour_count 
-from map.start_ship import generate_starting_ship
-from model.data_map import get_stored_value, set_stored_value, dump_map_to_db
 
+from map.map_generation_functions import generate_blind, generate_flashlight, generate
+from map.start_ship import generate_starting_ship
+#get_stored_value, get_stored_range, set_stored_value, dump_map_to_db
+from data.data_store import DataStore
+from itertools import chain
 
 
 class GameMap(object):
     '''
     
     '''
-    def __init__(self):
-        self.gen = generate_tile
-        self.map_cache = generate_starting_ship((0, 0, 0))
+    def __init__(self, gen, db):
+        self.db = db
+        self.gen = gen
+        self.map_cache = {}#generate_starting_ship((0, 0, 0))
+        self.sector = {}
+        self.sector_size = (50, 50)
     
     def dig(self, loc):
         if(self.get(loc) == 0):
@@ -24,7 +28,7 @@ class GameMap(object):
         else:
             prev = self.get(loc) 
             self.set(loc, 0)
-            set_stored_value(loc, 0)
+            self.db.set_stored_value(loc, 0)
             return prev
     
     def set(self, loc, val): #@ReservedAssignment
@@ -32,31 +36,41 @@ class GameMap(object):
         #set_stored_value(loc, val)
     
     def get(self, loc):
-        if loc in self.map_cache:
-            return self.map_cache[loc]
+        if not loc in self.map_cache:
+            self.cache_next(loc, self.sector_size)
         
-        val = get_stored_value(loc)
-        if  val != None:
-            self.map_cache[loc] = val
-            return val
+        return self.map_cache[loc]
+            
+            
+    def cache_next(self, loc, size):
+        x, y = loc
+        x_size, y_size = size
         
-        else:
-            if neighbour_count(self.gen, loc):
-                self.set(loc, 1)
-            else:
-                self.set(loc, self.gen(*loc))
-            return self.map_cache[loc]
+        from math import floor
+        sector = (floor(x/x_size), floor(y/y_size))
+        sec_x, sec_y = sector
+        
+        if not sector in self.sector:
+            x_min, x_max = sec_x*x_size, sec_x*x_size+x_size
+            y_min, y_max = sec_y*y_size, sec_y*y_size+y_size
+            
+            
+            for ny in range(y_min, y_max):
+                for nx in range(x_min, x_max):
+                    nloc = (nx, ny)
+                    self.set(nloc, self.gen(*nloc))
+            
+            val = self.db.get_stored_range(x_min, x_max, y_min, y_max)
+            self.map_cache = dict(chain(self.map_cache.items(), val.items()))
+            self.sector[sector] = 1        
+        
     def dump_to_db(self):
         d_map = []
         for key, value in self.map_cache.items():
-            x, y, z, = key
-            d_map.append((x, y, z, value))
+            x, y = key
+            d_map.append((x, y, value))
         return d_map
     
-gmap = GameMap()
-
-def dump_to_db():
-    dump_map_to_db(gmap.dump_to_db())
 
 
 def show_map(p = None, size = (33, 19), args = None):
@@ -66,7 +80,12 @@ def show_map(p = None, size = (33, 19), args = None):
     else:
         pos = (3, 3, 3)
     
-    cache_map = generate_blind(pos, (12, 12, 12), gmap)
+    
+        
+    cache_map = generate(pos, (32, 18), DataStore.instance().data["game_map"])
+    
+    #cache_map = generate_blind(pos, (12, 12, 12), DataStore.instance().data["game_map"])
+    
     norm_map = normalize(cache_map, p.get_location(), size)
     diff_map = diff(p.cache_map, norm_map)
     p.set_cache_map(norm_map)
@@ -79,17 +98,13 @@ def show_map(p = None, size = (33, 19), args = None):
 
 def normalize(gamemap, pos, map_size):
     new_map = {}
-    print(pos)
-    xpos, ypos, zpos = pos
+    xpos, zpos = pos
     z_size = int(map_size[1]/2)
     x_size = int(map_size[0]/2)
-    
     for key, _value in gamemap.items():
-        x, y, z = key
-        if y == ypos:
-            str_key = str(x-xpos+x_size)+"_"+str(z-zpos+z_size) 
-            new_map[str_key] = gamemap[key]
-    
+        x, z = key
+        str_key = str(x-xpos+x_size)+"_"+str(z-zpos+z_size) 
+        new_map[str_key] = gamemap[key]
     return new_map
     
 def diff(dict1, dict2):

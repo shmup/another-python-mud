@@ -3,17 +3,17 @@ Created on Jun 12, 2012
 
 @author: Nich
 '''
-from player.player import get_all_players
+from data.data_store import DataStore
 
 
 def gravity(p):
     grav = p.get_effective_gravity()
     vel = p.get_velocity()+grav
-    x, y, z = p.get_location()
-    new_z = z + int(vel)
-    p.set_location((x, y, new_z))
+    x, y = p.get_location()
+    new_y = y + int(vel)
+    p.set_location((x, new_y))
     
     
 def gravity_callback():
-    for p in get_all_players():
+    for p in DataStore.instance().data["all_players"]:
         gravity(p)

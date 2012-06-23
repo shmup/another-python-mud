@@ -14,7 +14,6 @@ class PlayerData(Base):
     name = Column(String)
     location_x = Column(Integer)
     location_y = Column(Integer)
-    location_z = Column(Integer)
     
     def __init__(self, name, password):
         self.name = name
@@ -33,4 +32,3 @@ def get(username):
     except:
         return None
     
-Base.metadata.create_all(engine)
