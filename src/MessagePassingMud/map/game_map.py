@@ -4,9 +4,7 @@ Created on Jun 3, 2012
 @author: Nich
 '''
 
-from map.map_generation_functions import generate_blind, generate_flashlight, generate
-from map.start_ship import generate_starting_ship
-#get_stored_value, get_stored_range, set_stored_value, dump_map_to_db
+from map.map_generation_functions import generate
 from data.data_store import DataStore
 from itertools import chain
 
@@ -18,7 +16,7 @@ class GameMap(object):
     def __init__(self, gen, db):
         self.db = db
         self.gen = gen
-        self.map_cache = {}#generate_starting_ship((0, 0, 0))
+        self.map_cache = {}
         self.sector = {}
         self.sector_size = (50, 50)
     
@@ -63,44 +61,33 @@ class GameMap(object):
             val = self.db.get_stored_range(x_min, x_max, y_min, y_max)
             self.map_cache = dict(chain(self.map_cache.items(), val.items()))
             self.sector[sector] = 1        
-        
+    '''    
     def dump_to_db(self):
         d_map = []
         for key, value in self.map_cache.items():
             x, y = key
             d_map.append((x, y, value))
         return d_map
-    
+    '''
 
 
-def show_map(p = None, size = (33, 19), args = None):
-    pos = None
-    if not p is None:
-        pos = p.location
-    else:
-        pos = (3, 3, 3)
+def show_map(p, size = (33, 20), args = None):
+    pos = p.location
     
-    
-        
-    cache_map = generate(pos, (32, 18), DataStore.instance().data["game_map"])
-    
-    #cache_map = generate_blind(pos, (12, 12, 12), DataStore.instance().data["game_map"])
-    
+    cache_map = generate(pos, size, DataStore.instance().data["game_map"])
     norm_map = normalize(cache_map, p.get_location(), size)
     diff_map = diff(p.cache_map, norm_map)
     p.set_cache_map(norm_map)
-    #gen_vert_x = display_vertical_x(cache_map, pos, size)
     
     yield ("gamemap", diff_map)
-    #for line in gen_vert_x:
-        #yield line
     
-
+    
+import math
 def normalize(gamemap, pos, map_size):
     new_map = {}
     xpos, zpos = pos
-    z_size = int(map_size[1]/2)
-    x_size = int(map_size[0]/2)
+    z_size = math.ceil(map_size[1]/2)
+    x_size = math.floor(map_size[0]/2)
     for key, _value in gamemap.items():
         x, z = key
         str_key = str(x-xpos+x_size)+"_"+str(z-zpos+z_size) 

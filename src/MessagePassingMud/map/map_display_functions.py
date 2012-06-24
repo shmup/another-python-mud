@@ -7,6 +7,8 @@ Created on Jun 7, 2012
 
 
 from map_generators import neighbours
+import math
+
 
 def generate(pos, size, gamemap):
     x, y = pos
@@ -14,8 +16,8 @@ def generate(pos, size, gamemap):
     
     gen_map = {}
     
-    for j in range(y - int(len_y/2), y + int(len_y/2)):
-        for i in range(x - int(len_x/2), x + int(len_x/2)):
+    for j in range(y - math.floor(len_y/2), y + math.ceil(len_y/2)):
+        for i in range(x - math.floor(len_x/2), x + math.ceil(len_x/2)):
             gen_map[(i, j)] = gamemap.get((i, j))
     return gen_map
     

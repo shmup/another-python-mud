@@ -87,7 +87,7 @@ function change_map(){
 	var map = map_diff
 	for(var tile in map.gamemap)
 	{
-		if(tile != "16_9"){
+		if(tile != "16_10"){
 		
 			if(map.gamemap[tile] < 50)
 			{
@@ -115,7 +115,7 @@ for(var j = 19; j >= 0 ; j--)
 	$("<div/>", { "class":"tile-row", "id": "row"+j }).appendTo(".map-box");
 	for(var i = 0; i < 33; i++)
 	{
-		if(i == 16 && j == 9)
+		if(i == 16 && j == 10)
 		{
 			$("<div>", {"class":"tile ptile", "id":i+"_"+j}).html("o").appendTo("#row"+j);
 			
