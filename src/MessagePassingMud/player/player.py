@@ -5,16 +5,17 @@ Created on May 22, 2012
 '''
 
 from map.directions import dirs, add_dirs
-from data.data_store import DataStore
+from map.game_map import dig
+from physics.hittest import hit_test
 
 
 class Player():
-    def __init__(self, name = "", location = (0, 0, 0), local_map = None):
+    def __init__(self, name = "", location = (0, 0), local_map = None):
         self.name = name
         self.location = location
         self.cache_map = {}
         self.local_map = local_map
-        self.inventory = [2]
+        self.inventory = []
         self.upgrades = []
         self.gravity = -1
         self.velocity = 0
@@ -28,14 +29,9 @@ class Player():
         return self.account
         
     def set_location(self, loc):
-        #Maybe this shoudn't do it's own hit testing?
         x, y = loc
-        if self.local_map.get((x, y)) == 0 or \
-           self.local_map.get(self.location) == 1:
-            #i = 1
-            #while self.local_map.get((x, y, z-i)) == 0: 
-            #    i = i + 1
-            #z = z - (i-1)
+        if hit_test(self.location, loc, self.local_map):
+            
             self.location = (x, y)
             return True
         return False
@@ -71,7 +67,7 @@ class Player():
             num_dir = dirs[direction]
             for i in range(dist):
                 new_loc = add_dirs(self.location, num_dir)
-                gemstone = DataStore.instance().data["game_map"].dig(new_loc)
+                gemstone = dig(new_loc, self.local_map)
                 if gemstone != 1 and gemstone != 0:
                     self.inventory.append(gemstone)
                 if not self.set_location(new_loc):

@@ -4,7 +4,7 @@ Created on Jun 3, 2012
 @author: Nich
 '''
 
-from map.map_generation_functions import generate
+from map.map_display_functions import generate
 from data.data_store import DataStore
 from itertools import chain
 
@@ -20,14 +20,6 @@ class GameMap(object):
         self.sector = {}
         self.sector_size = (50, 50)
     
-    def dig(self, loc):
-        if(self.get(loc) == 0):
-            return 0
-        else:
-            prev = self.get(loc) 
-            self.set(loc, 0)
-            self.db.set_stored_value(loc, 0)
-            return prev
     
     def set(self, loc, val): #@ReservedAssignment
         self.map_cache[loc] = val
@@ -40,6 +32,10 @@ class GameMap(object):
         return self.map_cache[loc]
             
             
+
+    def merge_map(self, val):
+        self.map_cache = dict(chain(self.map_cache.items(), val.items()))
+
     def cache_next(self, loc, size):
         x, y = loc
         x_size, y_size = size
@@ -59,7 +55,7 @@ class GameMap(object):
                     self.set(nloc, self.gen(*nloc))
             
             val = self.db.get_stored_range(x_min, x_max, y_min, y_max)
-            self.map_cache = dict(chain(self.map_cache.items(), val.items()))
+            self.merge_map(val)
             self.sector[sector] = 1        
     '''    
     def dump_to_db(self):
@@ -69,17 +65,25 @@ class GameMap(object):
             d_map.append((x, y, value))
         return d_map
     '''
+def dig(loc, game_map):
+        if(game_map.get(loc) == 0):
+            return 0
+        else:
+            prev = game_map.get(loc) 
+            game_map.set(loc, 0)
+            game_map.db.set_stored_value(loc, 0)
+            return prev
+
 
 
 def show_map(p, size = (33, 20), args = None):
     pos = p.location
-    
     cache_map = generate(pos, size, DataStore.instance().data["game_map"])
     norm_map = normalize(cache_map, p.get_location(), size)
     diff_map = diff(p.cache_map, norm_map)
     p.set_cache_map(norm_map)
     
-    yield ("gamemap", diff_map)
+    return ("gamemap", diff_map),
     
     
 import math

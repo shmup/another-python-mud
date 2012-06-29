@@ -4,7 +4,7 @@ Created on Jun 18, 2012
 @author: Nich
 '''
 import unittest
-from map.game_map import GameMap, normalize
+from map.game_map import GameMap, normalize, dig
 from tests.mocks.mock_data_map import DataMap
 from tests.mocks.mock_map_gen import gen_tile
 
@@ -24,7 +24,7 @@ class Test(unittest.TestCase):
         locs = [(0, 0), (0, 3), (3, 5), (5, 7), (7, 5), (5, 3), (3, 0)]
         nlocs = [(0, 1), (0, 5), (2, 3), (3, 6), (5, 70), (8, 5), (5, -3), (3, 20)]
         for loc in locs:
-            self.game_map.dig(loc)
+            dig(loc, self.game_map)
         
         for loc in locs:
             self.assertEqual(self.game_map.map_cache[loc], 0, "testing "+str(loc))
@@ -76,7 +76,13 @@ class Test(unittest.TestCase):
         nmap = normalize(gmap, pos, size)
         
         self.assertEqual(nmap, {"26_20":1, "6_0":1, "0_0":1})
+    
+    def testMergeMap(self):
         
+        pass
+        
+        
+    
     
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

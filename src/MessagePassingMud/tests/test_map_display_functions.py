@@ -5,7 +5,7 @@ Created on Jun 23, 2012
 '''
 import unittest
 from tests.mocks.mock_game_map import GameMap
-import map.map_generation_functions as map_gens
+import map.map_display_functions as map_gens
 
 
 

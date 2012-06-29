@@ -3,7 +3,7 @@ Created on Nov 27, 2011
 
 @author: Nich
 '''
-from model import Base, engine, Session
+from model import Base, Session
 from sqlalchemy import Column, String, Integer
 
 
