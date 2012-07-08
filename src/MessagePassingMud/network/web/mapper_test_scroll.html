@@ -1,0 +1,118 @@
+<html>
+<head>
+<link rel=StyleSheet href="style/style.css" type="text/css" media=screen>
+<link rel=StyleSheet href="style/map_style.css" type="text/css" media=screen>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script> 
+<script language = "javascript">
+
+function moveMap(dir)
+{
+	if(dir == "down")
+	{
+		$(".map-box").animate({
+    		"marginTop" : "-=20px"
+		});
+		$(".map-box").animate({
+    		"marginTop" : "0px"
+		}, 0);
+	}
+	if(dir == "right")
+	{
+		$(".map-box").animate({
+				"marginLeft" : "+=20px"
+		});
+		$(".map-box").animate({
+			"marginLeft" : "0px"
+		}, 0);
+	}
+	if(dir == "up")
+	{
+		$(".map-box").animate({
+    		"marginTop" : "+=20px"
+		});
+		$(".map-box").animate({
+    		"marginTop" : "0px"
+		}, 0);
+	}
+	if(dir == "left")
+	{
+		$(".map-box").animate({
+			"marginLeft" : "-=20px"
+		});
+		$(".map-box").animate({
+			"marginLeft" : "0px"
+		}, 0);
+	}
+
+}
+
+function handle_key_down(e)
+{
+	if(e.keyCode == 40)
+	{
+		moveMap("down");
+	}
+	if(e.keyCode == 37)
+	{
+		moveMap("right");
+		
+	}
+	if(e.keyCode == 39)
+	{
+		moveMap("left");
+	}
+	if(e.keyCode == 38)
+	{
+		moveMap("up");
+	}
+}
+
+
+
+$(document).ready(function() {
+for(var j = 19; j >= 0 ; j--)
+{
+	$("<div/>", { "class":"tile-row", "id": "row"+j }).appendTo(".map-box");
+	for(var i = 0; i < 33; i++)
+	{
+		
+		if(j%2 + i%2 == 0)
+		{
+			$("<div>", {"class":"tile tile0", "id":i+"_"+j}).html(" ").appendTo("#row"+j);
+		}
+		else
+		{
+			$("<div>", {"class":"tile tile1", "id":i+"_"+j}).html(" ").appendTo("#row"+j);
+		}
+		
+	}
+	
+	document.getElementById('kinput').onkeyup = handle_key_down;
+}
+   
+
+
+
+
+});
+
+</script>
+</head>
+
+<body>
+<div class = "container">
+	<div class = "container3">
+		<div class = "map-box"></div>
+		
+	</div>
+	
+	<div class = "tile ptile tile0" id="ptile">o</div>
+	<div class = "info-box"></div>
+	
+	
+</div>
+<div class = "chat-box"><input id = "kinput" type="text" size="30"></div>
+
+
+</body>
+</html>

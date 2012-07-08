@@ -1,0 +1,125 @@
+div.container
+{
+	overflow: auto;
+	border: 1px solid blue;
+}
+div.container2
+{
+	width:210;
+	float:left;
+	border: 1px solid red;
+}
+div.container3
+{
+	width:625;
+	height:365;
+	float:left;
+	overflow: hidden;
+	border: 1px solid green;
+}
+div.shop-container
+{
+	min-width:400;
+	min-height:425;
+	height:425;
+	float:left;
+	overflow: auto;
+	border: 1px solid purple;
+}
+div.shop-left
+{
+	width: 190px;
+	height: 415px;
+	float: left;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.shop-right
+{
+	float:left;
+	width: 190px;
+	height: 200px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.shop-player-inv
+{
+	width: 180px;
+	height: 200px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.shop-player-buy
+{
+	width: 180px;
+	height: 200px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.shop-inv
+{
+	width: 180px;
+	height: 200px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.shop-buy
+{
+	width: 180px;
+	height: 200px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+
+div.upgr-box {
+	width:200px;
+	height:100px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.info-box {
+	width:330px;
+	height:50px;
+	background-color:black;
+	color:white;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+
+div.inv-box {
+	width:200px;
+	height:300px;
+	background-color:black;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+div.chat-box {
+	float:none;
+}
+
+
+
+

@@ -1,0 +1,70 @@
+div.map-box {
+	display:table;
+	border-width:5px;	
+	border-style:groove;
+	border-color:gray;
+}
+
+div.tile-row {
+	width:100%;
+	display:table-row;
+}
+
+div.tile{
+	width:20px;
+	min-width:20px;
+	height:20px;
+	max-height:20px;
+	text-align: center;
+	display:table-cell;
+	background-color:black;
+}
+
+div.tile9 {
+	background-color:gray;
+}
+
+div.tile5 {
+	background-color:white;
+}
+div.tile4 {
+	background-color: red;
+}
+div.tile3 {
+	background-color:green;
+}
+div.tile2 {
+	background-color:blue;
+}
+div.tile1 {
+	/*color:white;*/
+	background-color:#5E2605;
+}
+div.tile0 {
+	color:black;
+	background-color:black;
+}
+div.ship-tile{
+	color:yellow;
+}
+div.ptile{
+	position:absolute;
+	left:315px;
+	top:175px;
+	color:red;
+}
+div.sapphire {
+	color:blue;
+}
+div.emerald {
+	color:green;
+}
+div.ruby {
+	color:red;
+}
+div.diamond {
+	color:white;
+}
+div.iron {
+	color:gray;
+}
