@@ -6,14 +6,14 @@ Created on Jun 18, 2012
 import unittest
 from map.game_map import GameMap, normalize, dig
 from tests.mocks.mock_data_map import DataMap
-from tests.mocks.mock_map_gen import gen_tile
+from tests.mocks.mock_map_gen import gen_sec
 
 
-class Test(unittest.TestCase):
+class TestGameMap(unittest.TestCase):
 
 
     def setUp(self):
-        self.game_map = GameMap(gen_tile, DataMap)
+        self.game_map = GameMap(gen_sec, DataMap)
 
 
     def tearDown(self):
@@ -65,7 +65,7 @@ class Test(unittest.TestCase):
     def testCacheNext(self):
         loc = (0, 0)
         size = (50, 50)
-        self.game_map.cache_next(loc, size)
+        self.game_map.generate_sector(loc, size)
         self.assertEqual(len(self.game_map.map_cache.items()), size[0]*size[1])
     
     def test_normalize(self):

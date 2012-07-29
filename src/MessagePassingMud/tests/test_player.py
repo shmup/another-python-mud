@@ -8,8 +8,7 @@ from tests.mocks.mock_game_map import GameMap
 from tests.mocks.mock_data_map import DataMap
 from player.player import Player
 
-class Test(unittest.TestCase):
-
+class TestPlayer(unittest.TestCase):
 
     def setUp(self):
         self.gmap = GameMap(db = DataMap(), input_map = {(-1, -1):1, (-1, 0):1, (-1, 1): 1,
@@ -17,39 +16,34 @@ class Test(unittest.TestCase):
                 (1, -1): 1, (1, 0): 0, (1, 1): 1})
         self.player = Player(local_map = self.gmap)
 
-
     def tearDown(self):
         pass
 
-
     def testSetLocationIfOpen(self):
         loc = (1, 0)
-        res = self.player.set_location(loc)
+        self.player.set_location(loc)
         self.assertEqual(self.player.location, loc)
-        self.assertTrue(res)
         
-    def testSetLocationIfClosed(self):
-        loc = (-1, 0)
-        res = self.player.set_location(loc)
-        self.assertEqual(self.player.location, (0, 0))
-        self.assertFalse(res)
         
     def testMoveSuccess(self):
+        p = self.player
         dir = "e"
-        self.player.move(1, dir)
+        p.move(dir)
         self.assertEqual(self.player.location, (1, 0))
         
     def testMoveFail(self):
+        p = self.player
         dir = "w"
-        self.player.move(1, dir)
+        p.move(dir)
         self.assertEqual(self.player.location, (0, 0))
         
     def testDigSuccess(self):
+        p = self.player
         dir = "d"
-        self.player.dig(1, dir)
+        p.dig(dir)
         self.assertEqual(self.player.location, (0, -1))
         self.assertEqual(self.gmap.get((0, -1)), 0)
-    
+        self.assertEqual(p.inventory, [2])
         
         
         

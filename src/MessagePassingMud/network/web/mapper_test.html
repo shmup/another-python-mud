@@ -1,20 +1,28 @@
 <html>
 <head>
-<link rel=StyleSheet href="style/style.css" type="text/css" media=screen>
-<link rel=StyleSheet href="style/map_style.css" type="text/css" media=screen>
-<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script> 
+<link rel=StyleSheet href="static/style/style.css" type="text/css" media=screen>
+<link rel=StyleSheet href="static/style/map_style.css" type="text/css" media=screen>
+<script type="text/javascript" src="static/scripts/jquery-1.7.2.min.js"></script>
+<script src="static/scripts/jquery.cookie.js"></script> 
 <script language = "javascript">
 //idea 1: Server sends a "windowed" view of the map. This windowed view is 0 based, regardless of the actual coordinate the user is at
 //Sub-idea 1: The server only sends the differences from the last request, not the full map
 
 var map_diff;				
 
-var ws = new WebSocket("ws://localhost:8888/websocket");
+var loc = window.location, new_uri;
+if (loc.protocol === "https:") {
+    new_uri = "wss:";
+} else {
+    new_uri = "ws:";
+}
+new_uri += "//" + loc.host;
+new_uri += loc.pathname + "websocket";
+var ws = new WebSocket(new_uri);
 
 ws.onopen = function() {
-   ws.send("Nicholas");
-   ws.send("a");
-   ws.send("l");
+   ws.send($.cookie("user"));
+   
 };
 
 ws.onmessage = function (evt) {
@@ -97,6 +105,7 @@ function moveMap(dir, callback)
 
 function handle_key_down(e)
 {
+	alert(e.keycode);
 	if(e.keyCode == 40)
 	{
 		//moveMap("down")
@@ -115,7 +124,7 @@ function handle_key_down(e)
 	if(e.keyCode == 38)
 	{
 		//moveMap("up");
-		ws.send("up");
+		ws.send("dig u");
 	}
 }
 

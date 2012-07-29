@@ -9,6 +9,7 @@ from data.data_store import DataStore
 def inv(p, args = None):
     new_dict = {}
     inv = p.get_inventory()
+    num_iron = inv.count(9)
     num_sapp = inv.count(2)
     num_em = inv.count(3)
     num_rub = inv.count(4)
@@ -21,6 +22,8 @@ def inv(p, args = None):
         new_dict["ruby"] = num_rub
     if num_diam > 0:
         new_dict["diamond"] = num_diam
+    if num_iron > 0:
+        new_dict["iron"] = num_iron
     return ("inv", new_dict)
 
 def inventory_callback():

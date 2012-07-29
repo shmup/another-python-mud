@@ -7,3 +7,6 @@ Created on Jun 4, 2012
 class Player():
     def __init__(self):
         self.name = "Nicholas"
+        
+    def dig(self, direction):
+        pass

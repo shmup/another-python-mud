@@ -16,11 +16,9 @@ class Jetpack(object):
         
     def up(self, p, args = None):
         if self.fuel != 0:
+            p.move("u")
             self.fuel = self.fuel - 1
-            x, y = p.get_location()
-            p.set_location((x, y+1))
-            loc = p.get_location()
-            return ("info", "You move 1 step to the up (Your position is: "+str(loc)+")"),
+            return ("info", "You move 1 step to the up (Your position is: "+str(p.get_location())+")"),
         else:
             self.fuel = 100
             return ("info", "You have run out of fuel. For Debug purposes, it has been set to 100 again"),

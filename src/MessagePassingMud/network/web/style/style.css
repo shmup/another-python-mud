@@ -11,6 +11,7 @@ div.container2
 }
 div.container3
 {
+	position:relative;
 	width:625;
 	height:365;
 	float:left;

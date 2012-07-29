@@ -6,16 +6,13 @@ Created on May 22, 2012
 from utils.coroutine import coroutine
 from command.command_matcher import match_command
 from command.commands import *
+from map.game_map import show_map
 
-
-commands = {"say":{"function":say, "num_args":"unlimited"},
-            "move":{"function":move, "num_args":2},
-            "dig":{"function":dig, "num_args":2},
+commands = {
+            "say":{"function":say, "num_args":"unlimited"},
+            "move":{"function":move, "num_args":1},
+            "dig":{"function":dig, "num_args":1},
             "goto":{"function":goto, "num_args":3},
-            "out":{"function":n, "num_args":0},
-            "in":{"function":s, "num_args":0},
-            "e":{"function":e, "num_args":0},
-            "w":{"function":w, "num_args":0},
             "l":{"function":show_map, "num_args":0}
             }
 

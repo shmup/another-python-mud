@@ -7,11 +7,7 @@ from data.data_store import DataStore
 
 
 def gravity(p):
-    grav = p.get_effective_gravity()
-    vel = p.get_velocity()+grav
-    x, y = p.get_location()
-    new_y = y + int(vel)
-    p.set_location((x, new_y))
+    p.move("d")
     
     
 def gravity_callback():

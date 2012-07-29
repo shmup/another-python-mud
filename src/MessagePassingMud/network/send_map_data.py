@@ -11,5 +11,5 @@ def show_map_callback():
         conn = DataStore.instance().data["account_connection"][p.get_account()]
         for item in show_map(p):
             dest, msg = item
-            if msg != {}:
+            if msg["map"] != {}:
                 conn.push(dest, msg)
