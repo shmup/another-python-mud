@@ -30,10 +30,10 @@ def print_all():
         
 def get(username):
     session = Session()
-    try:
-        return session.query(Account).filter(Account.name==username).one()
-    except:
-        return None
+    #try:
+    return session.query(Account).filter(Account.name==username).one()
+    #except:
+        #return None
 
 def make_account(username, password):
     session = Session()

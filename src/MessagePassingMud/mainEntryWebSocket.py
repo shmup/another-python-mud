@@ -13,6 +13,7 @@ from data.data_store import DataStore
 from player.player import Player
 from player.inventory import inventory_callback
 from model.data_map import DataMap
+from model.inventory import Inventory
 from model import Base, engine
 from map.map_generators import generate_sector
 from upgrades.jetpack import Jetpack
@@ -21,6 +22,7 @@ import os
 
 
 Base.metadata.create_all(engine)
+
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "network\web"),

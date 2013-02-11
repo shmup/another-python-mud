@@ -4,7 +4,7 @@ Created on Jun 29, 2012
 @author: Nich
 '''
 import unittest
-from commands import *
+from command.commands import *
 from tests.mocks.mock_player import Player
 
 

@@ -19,24 +19,22 @@ class DataMap(Base):
     def get_stored_value(tile):
         x, y = tile
         session = Session()
-        try:
-            value = session.query(DataMap).filter(and_(DataMap.x==x, DataMap.y==y)).one().value 
-            return value
-        except:
-            return None
+       
+        value = session.query(DataMap).filter(and_(DataMap.x==x, DataMap.y==y)).one().value 
+        return value
+        
     
     @staticmethod
     def get_stored_range(x_min, x_max, y_min, y_max):
         session = Session()
-        try:
-            value = session.query(DataMap).filter(and_(DataMap.x >= x_min, DataMap.x <= x_max, \
-                                                       DataMap.y >= y_min, DataMap.y <= y_max)).all() 
-            ret_val = {}
-            for tile in value:
-                ret_val[(tile.x, tile.y)] = tile.value
-            return ret_val
-        except:
-            return None
+        
+        value = session.query(DataMap).filter(and_(DataMap.x >= x_min, DataMap.x <= x_max, \
+                                                   DataMap.y >= y_min, DataMap.y <= y_max)).all() 
+        ret_val = {}
+        for tile in value:
+            ret_val[(tile.x, tile.y)] = tile.value
+        return ret_val
+        
         
     @staticmethod
     def set_stored_value(tile, value):
